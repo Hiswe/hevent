@@ -1,0 +1,265 @@
+@import 'nib'
+@import 'hstrap'
+
+$example-shadow = inset 0 0 4px noir(.15)
+$menu-height    = px2em(32)
+$width          = 50em
+
+html, body
+  padding 0; margin 0
+
+html
+  background linear-gradient(top, #fff, #ececec) fixed
+  font-family 'Helvetica', 'arial', 'sans-serif'
+body
+  background transparent
+
+a.selected
+  color $h-blue
+
+// Top menu
+.hs-menu
+  background #262626
+  margin 0
+  padding 0
+  border-bottom 1px solid white
+  border-top px2em(4) solid $h-pink
+
+  .hs-master-head
+    width 20.25em
+    flex 0
+
+  h1
+
+    font-family 'hiso-bright', Helvetica, sans-serif
+    font-weight normal
+    margin .25em 0
+    text-shadow 2px 2px 0 noir(.25)
+    font-size 4em
+    text-align left
+    margin-bottom .25em
+    crisp-font-smoothing()
+
+    a
+      color $h-pink
+
+  h4
+    color $h-dark-grey
+    text-shadow 1px 1px 0 noir(.25)
+    letter-spacing .25em
+    text-indent .75em
+
+  ul
+    text-align right
+    padding 0
+
+  li, a
+    display inline-block
+
+  li
+    padding-top 2em
+
+    a
+      padding .25em .5em
+
+.hs-small-menu
+  position relative
+  z-index 3
+  padding .25em 0 0
+
+  h1
+    font-size 2em
+  h4
+    display none
+  li
+    padding-top 0
+
+.hs-title
+  font-family 'hiso-dark', Helvetica, sans-serif
+  font-weight normal
+  font-size 2.5em
+
+// Home main banner
+.hs-submenu
+  width 9em
+  margin 0 0 0 $h-gutter
+  padding 0
+  position fixed
+  z-index 2
+  top 0
+  left 100%
+  margin-left -(@width + 1em)
+
+  .h-box
+    padding-top 6em
+    border-top none
+
+  ul, li
+    list-style none
+    margin 0
+
+  a
+    padding .25em 1em
+    display block
+
+.container
+  width $width
+  margin 0 auto
+
+  .hs-menu &
+    margin 0 auto
+
+
+  > h1
+    margin 1em 0 .5em
+    color $h-pink
+    text-shadow 2px 2px 0 noir(.25)
+
+
+section > h2
+  margin 1em 0 .5em
+  color $h-pink
+  font-family 'hiso-dark', Helvetica, sans-serif
+  font-weight normal
+  font-size 2.5em
+  crisp-font-smoothing()
+  text-shadow -1px -1px 0 noir(.25), 1px 1px 0 white
+  position relative
+
+  small
+    position absolute
+    right 100%; top 20%
+    margin-right .5em
+    font-family Helvetica, arial, sans-serif
+    font-size .5em
+    color #ececec; text-shadow none
+    font-weight normal
+    background noir(.2)
+    padding .25em .5em
+    transform-origin top right
+    transform skewY(-27deg)
+
+table
+  width 100%
+
+th
+  text-align left
+
+ul.h-row
+  padding 0
+  margin 0
+li.h-col
+  list-style none
+
+section
+  margin-bottom 1em
+
+  + h4
+    margin 1em 0 .25em
+
+  table&
+    width 100%
+    border-spacing .1em
+
+    th, td
+      padding .5em
+
+    th
+      font-weight bold
+
+.notice
+  font-family Helvetica, arial, sans-serif
+  font-style italic
+  font-size $h-fs
+  color #AAA
+  text-shadow none
+
+dl
+  margin-bottom -.5em
+
+dt, dd
+  display inline-block
+  vertical-align top
+  width 35%
+  box-sizing border-box
+  padding .25em
+  margin-bottom .5em
+
+dt
+  background rgba($h-light-pink, .25)
+
+dd
+  width 64%
+  padding-left 1em
+  margin-left -4px
+
+  ul
+    margin 0
+    padding 0
+    list-style none
+
+.danger
+  color $h-pink
+  display block
+
+  &:before
+    content '! '
+
+aside.h-popover
+  position relative
+
+.hs-box
+  h-box()
+  h-box-inset()
+  background-image embedurl('media/stripe_a028efdbf39d1d58806f780f3cc1d323.png')
+
+  .hs-box
+    margin-top .5em
+    background-image none
+
+.pointer-demo,
+.pointer-feedback
+  display inline-block
+  min-height 10em
+  vertical-align top
+
+.pointer-demo-container
+  white-space nowrap
+
+.pointer-demo
+  text-align center
+  line-height 10em
+  color blanc(.85)
+  text-shadow -1px -1px 0 black
+  width 10em
+  background noir()
+
+.pointer-feedback
+  margin-left 1em
+  white-space normal
+  width 34.5em
+
+  p
+    display inline-block
+    vertical-align middle
+    width 6em; height 3em
+    margin 0 -6.25em 0 .25em
+    text-align center
+    line-height @height
+    background rgba($h-pink, .75)
+    animation fadeOut 5s
+    animation-fill-mode both
+
+@keyframes fadeOut
+  0%
+    opacity 0
+  5%
+    margin-right 0em
+    opacity 1
+  40%
+    opacity 1
+  90%
+    margin-right 0em
+  100%
+    opacity 0
+    margin-right -6.25em

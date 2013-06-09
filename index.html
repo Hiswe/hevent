@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>Hevents</title>
+  <link rel="stylesheet" href="dist/font/hiso-font.css">
+  <link rel="stylesheet" href="dist/hevent.css">
+</head>
+<body>
+
+  <menu class="hs-menu">
+    <div class="container">
+      <div class="h-row">
+        <div class="hs-master-head h-col">
+          <h1><a href="#">Hevents</a></h1>
+        </div>
+        <ul class="h-col">
+          <li><a href="dist/base-css.html">Github</a></li>
+        </ul>
+      </div>
+    </div>
+  </menu>
+
+  <div class="container">
+    <h3 class="hs-title">Overview</h3>
+    <p>
+      <b>Hevent</b> is a jQuery plugin that enable <a href="http://www.w3.org/TR/pointerevents/">pointer events</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations">transitionend/animationend events</a>.
+    </p>
+    <p>The advantages of pointers events is that they ensure a support accross desktop/mobile platform and all the things in between</p>
+
+    <section id="links">
+      <h2>Pointer events</h2>
+      <div class="hs-box">
+        <p>Pointer event support is a copy/paste from the <a href="https://github.com/jquery/jquery-pointer-events">jquery-pointer-events</a>.<br>
+          The supported events are:
+        </p>
+        <ul>
+          <li>pointerdown</li>
+          <li>pointerup</li>
+          <li>pointermove</li>
+          <li>pointercancel</li>
+          <li>pointerover</li>
+          <li>pointerout</li>
+        </ul>
+        <p>3 additionals events are supported</p>
+        <ul>
+          <li>pointerswipe</li>
+          <li>pointerswipeleft</li>
+          <li>pointerswiperight</li>
+        </ul>
+        <div class="h-box-inset pointer-demo-container">
+          <div class="pointer-demo">Test events here</div>
+          <div class="pointer-feedback"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="dist/media/jquery.min.js"></script>
+  <script src="build/jquery.hevent.js"></script>
+  <script src="dist/hevent-demo.js"></script>
+</body>
+</html>
