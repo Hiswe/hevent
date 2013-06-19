@@ -247,22 +247,38 @@ for ( eventName in eventMap ) {
   var originalAddClass, originalRemoveClass;
   originalAddClass = jQuery.fn.addClass;
   originalRemoveClass = jQuery.fn.removeClass;
-  jQuery.fn.addClass = function() {
-    var result;
-    result = originalAddClass.apply(this, arguments);
-    $(this).trigger('classChange');
+  $.fn.addClass = function(className, silent) {
+    var result,
+      _this = this;
+    if (silent == null) {
+      silent = false;
+    }
+    result = originalAddClass.apply(this, [className]);
+    window.setTimeout(function() {
+      if (!silent) {
+        return $(_this).trigger('classChange');
+      }
+    }, 1);
     return result;
   };
-  return jQuery.fn.removeClass = function() {
-    var result;
-    result = originalRemoveClass.apply(this, arguments);
-    $(this).trigger('classChange');
+  return $.fn.removeClass = function(className, silent) {
+    var result,
+      _this = this;
+    if (silent == null) {
+      silent = false;
+    }
+    result = originalRemoveClass.apply(this, [className]);
+    window.setTimeout(function() {
+      if (!silent) {
+        return $(_this).trigger('classChange');
+      }
+    }, 1);
     return result;
   };
 })(jQuery, document, window);
 
 (function($, document, window) {
-  var aliasesEvent, event, isAnimated, lcFirst, sniffer, triggerCustomEvent, ucFirst, _i, _len, _ref, _results;
+  var aliasesEvent, eventName, isAnimated, lcFirst, sniffer, triggerCustomEvent, ucFirst, _i, _len, _ref, _results;
   lcFirst = function(text) {
     return text.substr(0, 1).toLowerCase() + text.substr(1);
   };
@@ -313,8 +329,8 @@ for ( eventName in eventMap ) {
       transitions: transitions,
       animations: animations,
       transAnimationSupport: transitions === true && animations === true,
-      transitionEvent: transitionEvent,
-      animationEvent: animationEvent,
+      transitionend: transitionEvent,
+      animationend: animationEvent,
       transAnimationW3c: transAnimationW3c
     };
   })();
@@ -326,59 +342,73 @@ for ( eventName in eventMap ) {
     return event.type = originalType;
   };
   isAnimated = function(el) {
-    var hasDuration, key, prefix, style, _i, _len, _ref;
+    var animated, hasDuration, key, prefix, style, _i, _len, _ref;
     if (!sniffer.transAnimationSupport) {
       return false;
     }
     style = window.getComputedStyle(el) || {};
     prefix = sniffer.cssPrefix;
-    isAnimated = false;
+    animated = false;
     _ref = ["TransitionDuration", "AnimationDuration"];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       key = _ref[_i];
       hasDuration = style[lcFirst(key)] || style["" + prefix + key];
-      if ((hasDuration != null) && hasDuration !== '') {
-        isAnimated = true;
+      if ((hasDuration != null) && hasDuration !== '' && hasDuration !== '0s') {
+        animated = true;
         break;
       }
     }
-    return isAnimated;
+    return animated;
   };
   $.event.special.transAnimationEnd = {
     sniffer: sniffer,
     setup: function(data, namespaces, eventHandle) {
-      var $this, thisObject;
+      var $this, eventName, thisObject;
       thisObject = this;
       $this = $(thisObject);
+      eventName = data.hevent;
       $this.on('classChange', function(event) {
-        return $.event.special.transAnimationEnd.handleClassChange(thisObject, event.target);
+        return $.event.special.transAnimationEnd.handleClassChange(thisObject, event.target, eventName);
       });
       if (sniffer.transAnimationW3c) {
         return;
       }
-      return $this.on("{sniffer.transitionEvent} {sniffer.animationEvent}", $.noop);
+      return $this.on(sniffer[eventName], function(event) {
+        return $.event.special.transAnimationEnd.fireEvent(thisObject, event.target, eventName);
+      });
     },
     teardown: function(namespaces) {
       var $this;
       $this = $(this);
       $this.off('classChange');
-      return $this.off("{sniffer.transitionEvent} {sniffer.animationEvent}");
+      $this.off("" + sniffer.transitionEnd + " " + sniffer.animationEnd);
+      return $this.off("transitionEnd animationEnd");
     },
-    handleClassChange: function(thisObject, origTarget) {
+    handleClassChange: function(thisObject, origTarget, eventName) {
       var ev;
+      ev = $.Event("transAnimationEnd", {
+        target: origTarget
+      });
+      triggerCustomEvent(thisObject, "transAnimationEnd", ev);
       if (isAnimated(thisObject)) {
         return;
       }
-      ev = $.Event("pointerswipe", {
+      return $.event.special.transAnimationEnd.fireEvent(thisObject, origTarget, eventName);
+    },
+    fireEvent: function(thisObject, origTarget, eventName) {
+      var ev;
+      ev = $.Event(eventName, {
         target: origTarget
       });
-      return triggerCustomEvent(thisObject, "pointerswipe", ev);
+      return triggerCustomEvent(thisObject, eventName, ev);
     }
   };
-  aliasesEvent = function(event) {
-    return $.event.special[event] = {
+  aliasesEvent = function(eventName) {
+    return $.event.special[eventName] = {
       setup: function() {
-        return $(this).on('transAnimationEnd', $.noop);
+        return $(this).on('transAnimationEnd', {
+          hevent: eventName
+        }, $.noop);
       },
       teardown: function() {
         return $(this).off('transAnimationEnd');
@@ -388,8 +418,8 @@ for ( eventName in eventMap ) {
   _ref = ['transitionend', 'animationend'];
   _results = [];
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    event = _ref[_i];
-    _results.push(aliasesEvent(event));
+    eventName = _ref[_i];
+    _results.push(aliasesEvent(eventName));
   }
   return _results;
 })(jQuery, document, window);

@@ -990,7 +990,7 @@ aside.h-popover {
   background-image: none;
 }
 .pointer-demo,
-.pointer-feedback {
+.feedback {
   display: inline-block;
   min-height: 10em;
   vertical-align: top;
@@ -1001,17 +1001,17 @@ aside.h-popover {
 .pointer-demo {
   text-align: center;
   line-height: 10em;
-  color: rgba(255,255,255,0.85);
-  text-shadow: -1px -1px 0 #000;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+  color: rgba(0,0,0,0.55);
   width: 10em;
   background: rgba(0,0,0,0.5);
 }
-.pointer-feedback {
+.feedback {
   margin-left: 1em;
   white-space: normal;
   width: 34.5em;
 }
-.pointer-feedback p {
+.feedback p {
   display: inline-block;
   vertical-align: middle;
   width: 6em;
@@ -1030,6 +1030,35 @@ aside.h-popover {
   -o-animation-fill-mode: both;
   -ms-animation-fill-mode: both;
   animation-fill-mode: both;
+}
+.transition-demo-container p,
+.transition-demo-container .h-ios {
+  display: inline-block;
+  vertical-align: middle;
+}
+.transition-demo-container .h-ios {
+  width: 5em;
+}
+.transition-demo-container .transition-demo {
+  text-align: center;
+  line-height: 10em;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+  color: rgba(0,0,0,0.55);
+  width: 10em;
+  height: 10em;
+  background: rgba(0,0,0,0.5);
+  display: inline-block;
+  vertical-align: top;
+}
+.transition-demo-container .transition-demo.active {
+  background: rgba(223,0,111,0.5);
+}
+.transition-demo-container .transition-demo.transition {
+  -webkit-transition: all 0.75s;
+  -moz-transition: all 0.75s;
+  -o-transition: all 0.75s;
+  -ms-transition: all 0.75s;
+  transition: all 0.75s;
 }
 @-moz-keyframes fadeOut {
   0% {

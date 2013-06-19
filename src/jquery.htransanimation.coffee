@@ -18,6 +18,8 @@
 
   # Determine Css Animation/Transition Support
   # see https://github.com/angular/angular.js/blob/master/src/ng/sniffer.js
+  # TODO determine if CSS hmtl pointer events are supported
+  # http://caniuse.com/pointer-events
   sniffer = (->
     vendorPrefix      = ''
     cssPrefix         = ''
@@ -64,8 +66,8 @@
       transitions:            transitions
       animations:             animations
       transAnimationSupport:  transitions is on and animations is on
-      transitionEvent:        transitionEvent
-      animationEvent:         animationEvent
+      transitionend:          transitionEvent
+      animationend:           animationEvent
       transAnimationW3c:      transAnimationW3c
     }
   )()
@@ -89,52 +91,60 @@
     # Test if slide elements has animations or transitions
     style       = window.getComputedStyle(el) or {}
     prefix      = sniffer.cssPrefix
-    isAnimated  = false
+    animated    = false
+
     for key in ["TransitionDuration", "AnimationDuration"]
       hasDuration = style[lcFirst(key)] or style["#{prefix}#{key}"]
-      if hasDuration? and hasDuration isnt ''
-        isAnimated = true
+      if hasDuration? and hasDuration isnt '' and hasDuration isnt '0s'
+        animated = true
         break
-    isAnimated
+    animated
 
   $.event.special.transAnimationEnd = {
 
     sniffer: sniffer
 
     setup: (data, namespaces, eventHandle) ->
-      thisObject = this
-      $this = $(thisObject)
+      thisObject  = this
+      $this       = $(thisObject)
+      eventName   = data.hevent
 
       # Listen to classChange event
       $this.on 'classChange', (event) ->
-        $.event.special.transAnimationEnd.handleClassChange thisObject, event.target
+        $.event.special.transAnimationEnd.handleClassChange thisObject, event.target, eventName
 
       # Regular case
       return if sniffer.transAnimationW3c
-      $this.on "{sniffer.transitionEvent} {sniffer.animationEvent}", $.noop
-
+      # redirect prefixed transition to W3C one
+      $this.on sniffer[eventName], (event) ->
+        $.event.special.transAnimationEnd.fireEvent thisObject, event.target, eventName
 
     teardown: (namespaces) ->
       $this = $(this)
       $this.off 'classChange'
-      $this.off "{sniffer.transitionEvent} {sniffer.animationEvent}"
+      $this.off "#{sniffer.transitionEnd} #{sniffer.animationEnd}"
+      $this.off "transitionEnd animationEnd"
 
-    handleClassChange: (thisObject, origTarget) ->
+    handleClassChange: (thisObject, origTarget, eventName) ->
+      ev = $.Event("transAnimationEnd", { target: origTarget })
+      triggerCustomEvent( thisObject, "transAnimationEnd", ev )
       return if isAnimated(thisObject)
-      ev = $.Event("pointerswipe", { target: origTarget })
-      triggerCustomEvent( thisObject, "pointerswipe", ev )
+      $.event.special.transAnimationEnd.fireEvent thisObject, origTarget, eventName
 
+    fireEvent: (thisObject, origTarget, eventName) ->
+      ev = $.Event( eventName, { target: origTarget })
+      triggerCustomEvent( thisObject, eventName, ev)
   }
 
   # aliases events
-  aliasesEvent = (event) ->
-    $.event.special[ event ] = {
+  aliasesEvent = (eventName) ->
+    $.event.special[ eventName ] = {
       setup: ->
-        $(this).on 'transAnimationEnd', $.noop
+        $(this).on 'transAnimationEnd', {hevent: eventName}, $.noop
       teardown: ->
         $(this).off 'transAnimationEnd'
     }
 
-  aliasesEvent event for event in ['transitionend', 'animationend']
+  aliasesEvent eventName for eventName in ['transitionend', 'animationend']
 
 )(jQuery, document, window)

@@ -28,7 +28,7 @@
     </p>
     <p>The advantages of pointers events is that they ensure a support accross desktop/mobile platform and all the things in between</p>
 
-    <section id="links">
+    <section id="pointers">
       <h2>Pointer events</h2>
       <div class="hs-box">
         <p>Pointer event support is a copy/paste from the <a href="https://github.com/jquery/jquery-pointer-events">jquery-pointer-events</a>.<br>
@@ -50,7 +50,26 @@
         </ul>
         <div class="h-box-inset pointer-demo-container">
           <div class="pointer-demo">Test events here</div>
-          <div class="pointer-feedback"></div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="transitions">
+      <h2>Transitions/Animations</h2>
+      <div class="hs-box">
+        <p>Support for transitionend/animationend.</p>
+        <p>The callback will fire even without support <b>or</b> if the animation/transition is not anymore applied at this time.</p>
+        <div class="h-box-inset transition-demo-container">
+          <div>
+            <p>Transition/Animation support:&nbsp;</p>
+            <div class="h-ios">
+              <input type="checkbox" id="transition-check">
+              <label class="h-label" for="transition-check" />
+            </div>
+          </div>
+          <div class="transition-demo">Click to animate</div>
+          <div class="feedback"></div>
         </div>
       </div>
     </section>

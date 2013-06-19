@@ -30,7 +30,6 @@ a.selected
     flex 0
 
   h1
-
     font-family 'hiso-bright', Helvetica, sans-serif
     font-weight normal
     margin .25em 0
@@ -218,7 +217,7 @@ aside.h-popover
     background-image none
 
 .pointer-demo,
-.pointer-feedback
+.feedback
   display inline-block
   min-height 10em
   vertical-align top
@@ -229,12 +228,12 @@ aside.h-popover
 .pointer-demo
   text-align center
   line-height 10em
-  color blanc(.85)
-  text-shadow -1px -1px 0 black
+  text-shadow 1px 1px 0 blanc(.4)
+  color noir(.55)
   width 10em
   background noir()
 
-.pointer-feedback
+.feedback
   margin-left 1em
   white-space normal
   width 34.5em
@@ -249,6 +248,31 @@ aside.h-popover
     background rgba($h-pink, .75)
     animation fadeOut 5s
     animation-fill-mode both
+
+.transition-demo-container
+  p,
+  .h-ios
+    display inline-block
+    vertical-align middle
+
+  .h-ios
+    width 5em
+
+  .transition-demo
+    text-align center
+    line-height 10em
+    text-shadow 1px 1px 0 blanc(.4)
+    color noir(.55)
+    width 10em; height @width
+    background noir()
+    display inline-block
+    vertical-align top
+
+    &.active
+      background rgba($h-pink, .5)
+
+    &.transition
+      transition all .75s
 
 @keyframes fadeOut
   0%

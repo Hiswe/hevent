@@ -75,6 +75,15 @@ module.exports = (grunt) ->
         }
       }
     }
+    watch: {
+      doc: {
+        files: ['dist/hevent.styl']
+        tasks: ['stylus:hevent']
+        options: {
+          nospawn: true
+        }
+      }
+    }
   }
 
   grunt.loadNpmTasks 'grunt-contrib-uglify'
@@ -82,14 +91,15 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-stylus'
   grunt.loadNpmTasks 'grunt-contrib-copy'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
 
   grunt.registerTask 'help', ->
     grunt.log.writeln 'grunt build :', 'Concact and uglify plugin'
     grunt.log.writeln 'grunt doc :', 'Generate doc css'
+    grunt.log.writeln 'grunt watch:doc :', 'Live doc generation'
     grunt.log.writeln 'grunt assets :', 'Copy assets from components'
 
   grunt.registerTask 'build', ['coffee:compile', 'concat', 'uglify:lib']
   grunt.registerTask 'doc', ['stylus:hevent']
   grunt.registerTask 'font', ['copy:font', 'copy:jquery']
-
   grunt.registerTask 'default', ['help']

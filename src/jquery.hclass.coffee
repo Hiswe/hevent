@@ -16,14 +16,18 @@
   originalAddClass      = jQuery.fn.addClass
   originalRemoveClass   = jQuery.fn.removeClass
 
-  jQuery.fn.addClass    = ->
-    result = originalAddClass.apply this, arguments
-    $(this).trigger 'classChange'
+  $.fn.addClass    = (className, silent = false) ->
+    result = originalAddClass.apply this, [className]
+    window.setTimeout =>
+      $(this).trigger 'classChange' unless silent
+    , 1
     result
 
-  jQuery.fn.removeClass = ->
-    result = originalRemoveClass.apply this, arguments
-    $(this).trigger 'classChange'
+  $.fn.removeClass = (className, silent = false ) ->
+    result = originalRemoveClass.apply this, [className]
+    window.setTimeout =>
+      $(this).trigger 'classChange' unless silent
+    , 1
     result
 
 )(jQuery, document, window)
