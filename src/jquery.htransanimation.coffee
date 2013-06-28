@@ -1,13 +1,21 @@
 #
-# Name          : hCarrousel
+# Name          : htransanimation
 # Author        : Hiswe halya, https://github.com/hiswe
-# Version       : 0.0.3
+# Version       : 0.2.0
 # Repo          :
 # Website       :
 # Dependencies  : jquery.hclass.coffee
 #
 
 (($, document, window) ->
+
+  trace = false
+  trans = 'transanimationend'
+
+  log   = (args...) ->
+    return unless trace
+    args.unshift('[TRANS-ANIMATION]')
+    console?.log?(args...)
 
   # Utility method
   lcFirst = (text) ->
@@ -73,6 +81,7 @@
   )()
 
   triggerCustomEvent = (obj, eventType, event) ->
+    log('triggerCustomEvent')
     originalType = event.type
     event.type = eventType
     $.event.dispatch.call(obj, event)
@@ -87,6 +96,7 @@
   # to the element (like media queries, no-animation class, etc.)
 
   isAnimated = (el) ->
+    log('isAnimated', 'begin animation check')
     return false unless sniffer.transAnimationSupport
     # Test if slide elements has animations or transitions
     style       = window.getComputedStyle(el) or {}
@@ -98,40 +108,44 @@
       if hasDuration? and hasDuration isnt '' and hasDuration isnt '0s'
         animated = true
         break
+    log('isAnimated', animated)
     animated
 
-  $.event.special.transAnimationEnd = {
+  $.event.special[trans] = {
 
     sniffer: sniffer
 
     setup: (data, namespaces, eventHandle) ->
+      log('setup')
       thisObject  = this
       $this       = $(thisObject)
       eventName   = data.hevent
 
       # Listen to classChange event
       $this.on 'classChange', (event) ->
-        $.event.special.transAnimationEnd.handleClassChange thisObject, event.target, eventName
+        $.event.special[trans].handleClassChange thisObject, event.target, eventName
 
       # Regular case
-      return if sniffer.transAnimationW3c
+      return log('W3C event name') if eventName is sniffer[eventName]
       # redirect prefixed transition to W3C one
       $this.on sniffer[eventName], (event) ->
-        $.event.special.transAnimationEnd.fireEvent thisObject, event.target, eventName
+        $.event.special[trans].fireEvent thisObject, event.target, eventName
 
     teardown: (namespaces) ->
       $this = $(this)
       $this.off 'classChange'
       $this.off "#{sniffer.transitionEnd} #{sniffer.animationEnd}"
-      $this.off "transitionEnd animationEnd"
+      $this.off "transitionend animationend"
 
     handleClassChange: (thisObject, origTarget, eventName) ->
-      ev = $.Event("transAnimationEnd", { target: origTarget })
-      triggerCustomEvent( thisObject, "transAnimationEnd", ev )
-      return if isAnimated(thisObject)
-      $.event.special.transAnimationEnd.fireEvent thisObject, origTarget, eventName
+      log('handleClassChange')
+      ev = $.Event(trans, { target: origTarget })
+      triggerCustomEvent( thisObject, trans, ev )
+      return true if isAnimated(thisObject)
+      $.event.special[trans].fireEvent thisObject, origTarget, eventName
 
     fireEvent: (thisObject, origTarget, eventName) ->
+      log('fireEvent')
       ev = $.Event( eventName, { target: origTarget })
       triggerCustomEvent( thisObject, eventName, ev)
   }
@@ -140,9 +154,15 @@
   aliasesEvent = (eventName) ->
     $.event.special[ eventName ] = {
       setup: ->
-        $(this).on 'transAnimationEnd', {hevent: eventName}, $.noop
+        $(this).on trans, {hevent: eventName}, $.noop
+        # Returning false tells jQuery to bind the specified event handler using native DOM methods.
+        # http://benalman.com/news/2010/03/jquery-special-events/#api-setup
+        if eventName is sniffer[eventName]
+          log('Use original event')
+          return false
+
       teardown: ->
-        $(this).off 'transAnimationEnd'
+        $(this).off trans
     }
 
   aliasesEvent eventName for eventName in ['transitionend', 'animationend']

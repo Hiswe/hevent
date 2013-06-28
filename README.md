@@ -35,12 +35,15 @@ And css Animations/Transitions
 
 - [jquery event swipe](https://github.com/stephband/jquery.event.swipe)
 - [pointer js](https://github.com/borismus/pointer.js)
+- [jquery Transition Events Plugin](https://github.com/ai/transition-events)
 
 ## TODO
 
+- Document some dirty hacks…
 - Support for pointerhold
 - Test
 
 ## Release History
 
-  - **0.0.1** — Initial commit
+  - **0.2.0** — Fix issue when the browser use w3c event name
+  - **0.1.0** — Initial commit
