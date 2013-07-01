@@ -62,7 +62,7 @@ module.exports = (grunt) ->
         files: [
           {
             expand: true
-            cwd: 'components/hiso-font/font/'
+            cwd: 'components/HisoFont/font/'
             src: '*'
             dest: 'dist/font'
             filter: 'isFile'

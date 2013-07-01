@@ -322,7 +322,7 @@ var __slice = [].slice;
     eventList = {
       'default': ['transitionend', 'animationend'],
       'Ms': ['MSTransitionEnd', 'MSAnimationEnd'],
-      'O': ['oTransitionEnd', 'oAnimationEnd'],
+      'O': ['otransitionend', 'oanimationend'],
       'Moz': ['transitionend', 'animationend'],
       'Webkit': ['webkitTransitionEnd', 'webkitAnimationEnd']
     };

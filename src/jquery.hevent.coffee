@@ -1,7 +1,7 @@
 #
 # Name          : hswipe
 # Author        : Hiswe halya, https://github.com/hiswe
-# Version       : 0.2.0
+# Version       : 0.2.1
 # Repo          :
 # Website       :
 # Dependencies  : https://github.com/jquery/jquery-pointer-events

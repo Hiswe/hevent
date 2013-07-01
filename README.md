@@ -45,5 +45,6 @@ And css Animations/Transitions
 
 ## Release History
 
+  - **0.2.1** — Fix issue on [Opera](http://ianlunn.co.uk/articles/opera-12-otransitionend-bugs-and-workarounds/)
   - **0.2.0** — Fix issue when the browser use w3c event name
   - **0.1.0** — Initial commit

@@ -1,7 +1,7 @@
 #
 # Name          : htransanimation
 # Author        : Hiswe halya, https://github.com/hiswe
-# Version       : 0.2.0
+# Version       : 0.2.1
 # Repo          :
 # Website       :
 # Dependencies  : jquery.hclass.coffee
@@ -52,7 +52,10 @@
     eventList = {
       'default': ['transitionend', 'animationend']
       'Ms': ['MSTransitionEnd', 'MSAnimationEnd']
-      'O': ['oTransitionEnd', 'oAnimationEnd']
+      # Since Opera 12 'oTransitionEnd' is all lowercased
+      # http://ianlunn.co.uk/articles/opera-12-otransitionend-bugs-and-workarounds/
+      # 'O': ['oTransitionEnd', 'oAnimationEnd']
+      'O': ['otransitionend', 'oanimationend']
       'Moz': ['transitionend', 'animationend']
       'Webkit': ['webkitTransitionEnd', 'webkitAnimationEnd']
     }

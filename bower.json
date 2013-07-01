@@ -1,6 +1,6 @@
 {
   "name": "hevent",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "build/jquery.hevent.js",
   "ignore": [
     "node_modules",
@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "jquery-pointer-events": "git://github.com/jquery/jquery-pointer-events.git",
-    "hiso-font": "latest"
+    "HisoFont": "~0.2.2"
   }
 }
