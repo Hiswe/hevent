@@ -24,37 +24,8 @@
   <div class="container">
     <h3 class="hs-title">Overview</h3>
     <p>
-      <b>Hevent</b> is a jQuery plugin that enable <a href="http://www.w3.org/TR/pointerevents/">pointer events</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations">transitionend/animationend events</a>.
+      <b>Hevent</b> is a jQuery plugin that enable <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations">transitionend/animationend events</a>.
     </p>
-    <p>The advantages of pointers events is that they ensure a support accross desktop/mobile platform and all the things in between</p>
-
-    <section id="pointers">
-      <h2>Pointer events</h2>
-      <div class="hs-box">
-        <p>Pointer event support is a copy/paste from the <a href="https://github.com/jquery/jquery-pointer-events">jquery-pointer-events</a>.<br>
-          The supported events are:
-        </p>
-        <ul>
-          <li>pointerdown</li>
-          <li>pointerup</li>
-          <li>pointermove</li>
-          <li>pointercancel</li>
-          <li>pointerover</li>
-          <li>pointerout</li>
-        </ul>
-        <p>3 additionals events are supported</p>
-        <ul>
-          <li>pointerswipe</li>
-          <li>pointerswipeleft</li>
-          <li>pointerswiperight</li>
-        </ul>
-        <div class="h-box-inset pointer-demo-container">
-          <div class="pointer-demo">Test events here</div>
-          <div class="feedback"></div>
-        </div>
-      </div>
-    </section>
-
     <section id="transitions">
       <h2>Transitions/Animations</h2>
       <div class="hs-box">
@@ -75,7 +46,10 @@
       </div>
     </section>
   </div>
+  <script src="dist/media/pointerevents.min.js"></script>
+  <script src="dist/media/pointergestures.min.js"></script>
   <script src="dist/media/jquery.min.js"></script>
+  <script src="dist/media/pointer.js"></script>
   <script src="build/jquery.hevent.js"></script>
   <script src="dist/hevent-demo.js"></script>
 </body>

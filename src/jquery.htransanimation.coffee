@@ -26,8 +26,6 @@
 
   # Determine Css Animation/Transition Support
   # see https://github.com/angular/angular.js/blob/master/src/ng/sniffer.js
-  # TODO determine if CSS hmtl pointer events are supported
-  # http://caniuse.com/pointer-events
   sniffer = (->
     vendorPrefix      = ''
     cssPrefix         = ''

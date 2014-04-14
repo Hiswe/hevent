@@ -1,17 +1,19 @@
 {
   "name": "hevent",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "build/jquery.hevent.js",
   "ignore": [
     "node_modules",
-    "components",
+    "bower_components",
     "dist/hevent.styl"
   ],
   "dependencies": {
-    "jquery": "~1.9.1"
+    "jquery": "~1.11.0"
   },
   "devDependencies": {
+    "pointerevents-polyfill": "~0.2.0",
     "jquery-pointer-events": "git://github.com/jquery/jquery-pointer-events.git",
-    "HisoFont": "~0.2.2"
+    "hiso-font": "~0.2.2",
+    "PointerGestures": "Polymer/PointerGestures#~0.2.2"
   }
 }
