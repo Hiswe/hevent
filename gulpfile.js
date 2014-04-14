@@ -40,6 +40,24 @@ gulp.task('major', function() {
   return gulp.src(path.pack).pipe(bump({type:'major'})).pipe(gulp.dest('./'));
 });
 
+gulp.task('tag', function () {
+  var v = 'v' + pkg.version;
+  var message = 'Release ' + v;
+
+  console.log(gutil.colors.red('TODO'), 'for ' + pkg.version);
+  console.log(gutil.colors.red("DON'T FORGET TO UPDATE README.md"));
+
+  console.log('git ci -am "'+message+'"');
+
+  console.log('git tag -a '+pkg.version+' -m "'+message+'"');
+  console.log('git push origin master --tags');
+  // console.log('npm publish');
+
+  // return gulp.src('./')
+  //   .pipe(git.commit(message, {args: '-a'}))
+  //   .pipe(git.tag(v, message));
+});
+
 /////////
 // ASSETS
 /////////
