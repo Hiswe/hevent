@@ -86,7 +86,7 @@ gulp.task('lib', ['clean-lib'], function() {
   var message = ['Don\'t forget to build ./bower_components/PointerGestures',
   'cd ./bower_components/PointerGestures && npm install && grunt'
   ].join('\n')
-  gutil.log(gutil.colors.yellow(message);
+  gutil.log(gutil.colors.yellow(message));
   return gulp.src(config.lib.src)
     .pipe(gulp.dest(config.lib.dst));
 });

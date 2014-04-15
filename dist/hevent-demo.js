@@ -16,9 +16,9 @@
       });
     $transitionCheck.on('change', function (event){
       if ($transitionDemo.hasClass('transition')) {
-          $transitionDemo.removeClass('transition', true);
+          $transitionDemo.removeClass('transition');
       } else {
-        $transitionDemo.addClass('transition', true);
+        $transitionDemo.addClass('transition');
       }
     });
   });

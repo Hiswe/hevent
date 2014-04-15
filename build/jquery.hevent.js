@@ -1,29 +1,27 @@
 /**
  * hevent - Css animations & transitions events for all browsers
- * @version v0.4.0
+ * @version v0.4.1
  * @link http://hiswe.github.io/hevent/
  * @license WTFPL
  */
 (function($, document, window) {
   var aliases, heventMethod, orginalMethod, _results;
   aliases = {
-    heventAddClass: jQuery.fn.addClass,
-    heventRemoveClass: jQuery.fn.removeClass,
-    heventToggleClass: jQuery.fn.toggleClass
+    heventAddClass: 'addClass',
+    heventRemoveClass: 'removeClass',
+    heventToggleClass: 'toggleClass'
   };
   _results = [];
   for (heventMethod in aliases) {
     orginalMethod = aliases[heventMethod];
     _results.push((function() {
       return $.fn[heventMethod] = function(className) {
-        var result;
-        result = orginalMethod.apply(this, [className]);
         window.setTimeout((function(_this) {
           return function() {
             return $(_this).trigger('classChange');
           };
         })(this), 1);
-        return result;
+        return jQuery.fn[orginalMethod].apply(this, [className]);
       };
     })());
   }

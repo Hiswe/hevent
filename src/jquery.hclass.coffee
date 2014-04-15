@@ -14,19 +14,18 @@
 (($, document, window) ->
 
   aliases = {
-    heventAddClass: jQuery.fn.addClass
-    heventRemoveClass: jQuery.fn.removeClass
-    heventToggleClass: jQuery.fn.toggleClass
+    heventAddClass: 'addClass'
+    heventRemoveClass: 'removeClass'
+    heventToggleClass: 'toggleClass'
   }
 
   for heventMethod, orginalMethod of aliases
     do ->
       $.fn[heventMethod] = (className) ->
-        result = orginalMethod.apply this, [className]
         # timeout needed for the event to be properly fired and listened
         window.setTimeout =>
           $(this).trigger 'classChange'
         , 1
-        result
+        jQuery.fn[orginalMethod].apply this, [className]
 
 )(jQuery, document, window)
