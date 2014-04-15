@@ -47,6 +47,9 @@ Here is the list of all additional method
 - heventRemoveClass
 - heventToggleClass
 
+## Build
+
+You can build the library by running ```gulp build``` after the necessary ```npm install & bower install```
 
 ## Release History
 

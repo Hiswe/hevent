@@ -83,7 +83,10 @@ gulp.task('clean-lib', function() {
 });
 
 gulp.task('lib', ['clean-lib'], function() {
-  gutil.log(gutil.colors.yellow('Don\'t forget to build ./bower_components/PointerGestures \n cd ./bower_components/PointerGestures && npm install && grunt'));
+  var message = ['Don\'t forget to build ./bower_components/PointerGestures',
+  'cd ./bower_components/PointerGestures && npm install && grunt'
+  ].join('\n')
+  gutil.log(gutil.colors.yellow(message);
   return gulp.src(config.lib.src)
     .pipe(gulp.dest(config.lib.dst));
 });
@@ -181,4 +184,5 @@ gulp.task('default', function() {
   console.log(gutil.colors.red('major'), '  ', 'major version of json');
   console.log(gutil.colors.red('assets'), ' ', 'Copy fonts & libs');
   console.log(gutil.colors.red('build'), '  ', 'Build plugin');
+  console.log(gutil.colors.red('start'), '  ', 'Demo tiny server with lr');
 });
