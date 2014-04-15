@@ -4,6 +4,7 @@
   <meta charset=utf-8>
   <title>Hevents</title>
   <link rel="stylesheet" href="dist/font/hiso-font.css">
+  <link rel="stylesheet" href="dist/prism.css">
   <link rel="stylesheet" href="dist/hevent.css">
 </head>
 <body>
@@ -14,20 +15,47 @@
         <div class="hs-master-head h-col">
           <h1><a href="#">Hevents</a></h1>
         </div>
-        <ul class="h-col">
-          <li><a href="dist/base-css.html">Github</a></li>
-        </ul>
       </div>
     </div>
   </menu>
 
   <div class="container">
-    <p>
-      <b>Hevent</b> is a jQuery plugin that enable <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations">transitionend/animationend events</a>.
-    </p>
+    <section>
+      <h2>CSS Callback</h2>
+      <p>In your jQuery code you just have to do</p>
+      <pre><code class="language-javascript">
+$('selector').on('transitionend' , callback)
+      </code></pre>
+      <p>And the event will be aliased to whatever browser event is.</p>
+    </section>
+    <section>
+      <h2>Classes</h2>
+      <p>Here is one example:</p>
+      <pre><code class="language-javascript">
+$('selector').on('transitionend' , callback);
+$('selector').toggleClass('animatedClass');
+      </code></pre>
+      <p>The callback may not be called if another css rule remove a CSS transition or animation (like in responsive)… So you have to handle this in your JS.</p>
+      <p>Or you can use this:</p>
+      <pre><code class="language-javascript">
+$('selector').on('transitionend' , callback);
+$('selector').heventToggleClass('animatedClass');
+      </code></pre>
+      <p>The callback will fire after the transition/animation end <br/>
+      <strong>or</strong> <br/>
+      if no animation/transition is detected just fire quite immediatly.</p>
+      <p>Here is the list of all additional method</p>
+      <ul>
+      <li>heventAddClass</li>
+      <li>heventRemoveClass</li>
+      <li>heventToggleClass</li>
+      </ul>
+    </section>
+
+
     <section id="transitions">
-      <p>The callback will fire even without support <b>or</b> if the animation/transition is not anymore applied at this time.</p>
-      <p class="danger">In opera the transition event <a href="http://ianlunn.co.uk/articles/opera-12-otransitionend-bugs-and-workarounds/">will fire twice</a></p>
+      <h2>Demo</h2>
+      <!-- <p class="danger">In opera the transition event <a href="http://ianlunn.co.uk/articles/opera-12-otransitionend-bugs-and-workarounds/">will fire twice</a></p> -->
       <div class="h-box-inset transition-demo-container">
         <div>
           <p>Transition/Animation support:&nbsp;</p>
@@ -41,8 +69,12 @@
       </div>
     </section>
   </div>
+  <aside>
+    <a href="https://github.com/Hiswe/hevent"><span>Fork me on github</span></a>
+  </aside>
+  <script src="dist/prism.js"></script>
   <script src="dist/lib/pointerevents.min.js"></script>
-  <script src="dist/lib/pointerevents.min.js"></script>
+  <script src="dist/lib/pointergestures.min.js"></script>
   <script src="dist/lib/modernizr.js"></script>
   <script src="dist/lib/jquery.min.js"></script>
   <script src="dist/lib/pointer.js"></script>

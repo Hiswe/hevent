@@ -23,11 +23,17 @@ exports.stylus = {
   dst: 'dist'
 };
 
+exports.prism = {
+  js: '!dist/prism.js',
+  css: '!dist/prism.css'
+}
+
 exports.lib = {
   src: [
-    'bower_components/pointerevents-polyfill/pointerevents.min.js',
     'bower_components/modernizr/modernizr.js',
+    'bower_components/pointerevents-polyfill/pointerevents.min.js',
     'bower_components/PointerGestures/pointergestures.min.js',
+    'bower_components/PointerGestures/pointergestures.js.map',
     'bower_components/jquery/dist/jquery.min.js',
     'bower_components/jquery-pointer-events/src/pointer.js'
   ],

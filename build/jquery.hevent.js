@@ -14,16 +14,18 @@
   _results = [];
   for (heventMethod in aliases) {
     orginalMethod = aliases[heventMethod];
-    _results.push($.fn[heventMethod] = function(className) {
-      var result;
-      result = orginalMethod.apply(this, [className]);
-      window.setTimeout((function(_this) {
-        return function() {
-          return $(_this).trigger('classChange');
-        };
-      })(this), 1);
-      return result;
-    });
+    _results.push((function() {
+      return $.fn[heventMethod] = function(className) {
+        var result;
+        result = orginalMethod.apply(this, [className]);
+        window.setTimeout((function(_this) {
+          return function() {
+            return $(_this).trigger('classChange');
+          };
+        })(this), 1);
+        return result;
+      };
+    })());
   }
   return _results;
 })(jQuery, document, window);
@@ -31,7 +33,7 @@
 var __slice = [].slice;
 
 (function($, Modernizr, document, window) {
-  var aliasesEvent, eventName, isAnimated, log, sniffer, trace, trans, triggerCustomEvent, _i, _len, _ref, _results;
+  var aliasesEvent, eventName, isAnimated, lcFirst, log, sniffer, trace, trans, triggerCustomEvent, ucFirst, _i, _len, _ref, _results;
   if (Modernizr == null) {
     return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should be installed for hevet to work') : void 0;
   }
@@ -46,8 +48,14 @@ var __slice = [].slice;
     args.unshift('[TRANS-ANIMATION]');
     return typeof console !== "undefined" && console !== null ? typeof console.log === "function" ? console.log.apply(console, args) : void 0 : void 0;
   };
+  lcFirst = function(text) {
+    return text.substr(0, 1).toLowerCase() + text.substr(1);
+  };
+  ucFirst = function(text) {
+    return text.substr(0, 1).toUpperCase() + text.substr(1);
+  };
   sniffer = (function() {
-    var animationEndEventNames, transEndEventNames;
+    var animationEndEventNames, result, transEndEventNames;
     transEndEventNames = {
       'transition': 'transitionend',
       'msTransition': 'MSTransitionEnd',
@@ -62,11 +70,13 @@ var __slice = [].slice;
       'MozAnimation': 'animationend',
       'WebkitAnimation': 'webkitAnimationEnd'
     };
-    return {
+    result = {
       transAnimationSupport: Modernizr.cssanimations === true && Modernizr.csstransitions === true,
       transitionend: transEndEventNames[Modernizr.prefixed('transition')],
       animationend: animationEndEventNames[Modernizr.prefixed('animation')]
     };
+    log('sniffer', result);
+    return result;
   })();
   triggerCustomEvent = function(obj, eventType, event) {
     var originalType;
@@ -150,7 +160,7 @@ var __slice = [].slice;
           hevent: eventName
         }, $.noop);
         if (eventName === sniffer[eventName]) {
-          log('Use original event');
+          log('Use original event for', eventName);
           return false;
         }
       },

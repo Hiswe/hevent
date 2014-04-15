@@ -14,10 +14,17 @@
   trace = false
   trans = 'transanimationend'
 
+  # Utility method
   log   = (args...) ->
     return unless trace
     args.unshift('[TRANS-ANIMATION]')
     console?.log?(args...)
+
+  lcFirst = (text) ->
+    text.substr(0, 1).toLowerCase() + text.substr(1)
+
+  ucFirst = (text) ->
+    text.substr(0, 1).toUpperCase() + text.substr(1)
 
   # Determine Css Animation/Transition Support
   # Based on Modernizr
@@ -40,11 +47,14 @@
       'WebkitAnimation' :'webkitAnimationEnd'
     }
 
-    return {
+    result =  {
       transAnimationSupport:  Modernizr.cssanimations is on and Modernizr.csstransitions is on
       transitionend:          transEndEventNames[ Modernizr.prefixed('transition') ]
       animationend:           animationEndEventNames[ Modernizr.prefixed('animation') ]
     }
+    log('sniffer', result)
+    result
+
   )()
 
   triggerCustomEvent = (obj, eventType, event) ->
@@ -125,7 +135,7 @@
         # Returning false tells jQuery to bind the specified event handler using native DOM methods.
         # http://benalman.com/news/2010/03/jquery-special-events/#api-setup
         if eventName is sniffer[eventName]
-          log('Use original event')
+          log('Use original event for', eventName)
           return false
 
       teardown: ->

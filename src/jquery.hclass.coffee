@@ -20,12 +20,13 @@
   }
 
   for heventMethod, orginalMethod of aliases
-    $.fn[heventMethod] = (className) ->
-      result = orginalMethod.apply this, [className]
-      # timeout needed for the event to be properly fired and listened
-      window.setTimeout =>
-        $(this).trigger 'classChange'
-      , 1
-      result
+    do ->
+      $.fn[heventMethod] = (className) ->
+        result = orginalMethod.apply this, [className]
+        # timeout needed for the event to be properly fired and listened
+        window.setTimeout =>
+          $(this).trigger 'classChange'
+        , 1
+        result
 
 )(jQuery, document, window)

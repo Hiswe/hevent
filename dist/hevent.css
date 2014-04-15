@@ -965,7 +965,6 @@ section > h2 {
   font-size: 2.5em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-shadow: -1px -1px 0 rgba(0,0,0,0.25), 1px 1px 0 #fff;
   position: relative;
 }
 section > h2 small {
@@ -1154,6 +1153,51 @@ aside.h-popover {
   -o-transition: all 0.75s;
   -ms-transition: all 0.75s;
   transition: all 0.75s;
+}
+aside {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15em;
+  height: 11.5em;
+  overflow: hidden;
+}
+aside a {
+  display: block;
+  margin-top: 10em;
+  padding: 0.25em 1em;
+  width: 100%;
+  background: #df006f;
+  text-align: center;
+  color: #222;
+  font-weight: bold;
+  text-shadow: 1px 1px rgba(255,255,255,0.15);
+  text-decoration: none;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transform-origin: top right;
+  -moz-transform-origin: top right;
+  -o-transform-origin: top right;
+  -ms-transform-origin: top right;
+  transform-origin: top right;
+  -webkit-transition: background 0.25s;
+  -moz-transition: background 0.25s;
+  -o-transition: background 0.25s;
+  -ms-transition: background 0.25s;
+  transition: background 0.25s;
+}
+aside a:hover {
+  background: #ff198c;
+}
+aside a span {
+  display: block;
+  padding: 0.25em 0;
+  border: dashed 1px rgba(0,0,0,0.5);
+  border-width: 1px 0;
+  color: #222;
 }
 @-moz-keyframes fadeOut {
   0% {

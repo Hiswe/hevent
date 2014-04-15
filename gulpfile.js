@@ -134,7 +134,7 @@ gulp.task('build', ['clean-js'], function(){
 });
 
 gulp.task('clean-js', function() {
-  return gulp.src(config.plugin.dst + '/*.js', {read: false}).pipe(clean());
+  return gulp.src([config.plugin.dst + '/jquery.hevent*.js'], {read: false}).pipe(clean());
 });
 
 /////////
