@@ -1,6 +1,6 @@
 /**
  * hevent - Css animations & transitions events for all browsers
- * @version v0.3.0
+ * @version v0.4.0
  * @link http://hiswe.github.io/hevent/
  * @license WTFPL
  */
