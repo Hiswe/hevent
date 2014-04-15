@@ -11,6 +11,7 @@
         $transitionDemo.heventToggleClass('active');
       })
       .on('transitionend', function (event){
+        // console.log(event.propertyName, event.elapsedTime);
         $('<p>End</p>').prependTo($transitionFeedback);
         $transitionCheck.attr('disabled', false);
       });
@@ -21,5 +22,20 @@
         $transitionDemo.addClass('transition');
       }
     });
+
+    var $animationDemo       = $('.animation-demo');
+    var $animationFeedback   = $('#animations .feedback');
+
+    $animationDemo
+      .on('tap', function (event){
+        // $transitionCheck.attr('disabled', true);
+        $animationDemo.heventToggleClass('active');
+      })
+      .on('animationend', function (event){
+        // console.log(event.propertyName, event.elapsedTime);
+        $('<p>End</p>').prependTo($animationFeedback);
+        // $transitionCheck.attr('disabled', false);
+      });
+
   });
 })(jQuery, document, window);

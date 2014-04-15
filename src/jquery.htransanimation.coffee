@@ -12,7 +12,6 @@
   return console?.warn('Modernizr should be installed for hevet to work') unless Modernizr?
 
   trace = false
-  trans = 'transanimationend'
 
   # Utility method
   log   = (args...) ->
@@ -58,7 +57,7 @@
   )()
 
   triggerCustomEvent = (obj, eventType, event) ->
-    log('triggerCustomEvent')
+    log('triggerCustomEvent', event)
     originalType = event.type
     event.type = eventType
     $.event.dispatch.call(obj, event)
@@ -88,11 +87,14 @@
     log('isAnimated', animated)
     animated
 
-  $.event.special[trans] = {
+  # Make a jQuery special event
+  # transanimationend
+  # this is a common event for both transitionend & animationend
+  $.event.special.heventend = {
 
     sniffer: sniffer
 
-    setup: (data, namespaces, eventHandle) ->
+    setup: (data, namespaces) ->
       log('setup')
       thisObject  = this
       $this       = $(thisObject)
@@ -100,13 +102,17 @@
 
       # Listen to classChange event
       $this.on 'classChange', (event) ->
-        $.event.special[trans].handleClassChange thisObject, event.target, eventName
+        $.event.special.heventend.handleClassChange(thisObject, event, eventName)
 
       # Regular case
-      return log('W3C event name') if eventName is sniffer[eventName]
+      if eventName is sniffer[eventName]
+        log('W3C event name')
+        return false
+
       # redirect prefixed transition to W3C one
       $this.on sniffer[eventName], (event) ->
-        $.event.special[trans].fireEvent thisObject, event.target, eventName
+        log('event', event)
+        $.event.special.heventend.fireEvent(thisObject, event.target, eventName)
 
     teardown: (namespaces) ->
       $this = $(this)
@@ -114,12 +120,13 @@
       $this.off "#{sniffer.transitionEnd} #{sniffer.animationEnd}"
       $this.off "transitionend animationend"
 
-    handleClassChange: (thisObject, origTarget, eventName) ->
-      log('handleClassChange')
-      ev = $.Event(trans, { target: origTarget })
-      triggerCustomEvent( thisObject, trans, ev )
+    handleClassChange: (thisObject, event, eventName) ->
+      origTarget = event.target
+      log('handleClassChange', event)
+      ev = $.Event('heventend', { target: origTarget })
+      triggerCustomEvent( thisObject, 'heventend', ev )
       return true if isAnimated(thisObject)
-      $.event.special[trans].fireEvent thisObject, origTarget, eventName
+      $.event.special.heventend.fireEvent(thisObject, origTarget, eventName)
 
     fireEvent: (thisObject, origTarget, eventName) ->
       log('fireEvent')
@@ -127,11 +134,18 @@
       triggerCustomEvent( thisObject, eventName, ev)
   }
 
-  # aliases events
+  # Aliases transitionend & animationend
+  # so they point to transanimationend events
   aliasesEvent = (eventName) ->
+    # if eventName is sniffer[eventName]
+    #   log('add fixHooks for', eventName)
+    jQuery.event.fixHooks[eventName] = {
+      props: ['propertyName', 'elapsedTime']
+    }
+
     $.event.special[ eventName ] = {
       setup: ->
-        $(this).on trans, {hevent: eventName}, $.noop
+        $(this).on('heventend', {hevent: eventName}, $.noop)
         # Returning false tells jQuery to bind the specified event handler using native DOM methods.
         # http://benalman.com/news/2010/03/jquery-special-events/#api-setup
         if eventName is sniffer[eventName]
@@ -139,7 +153,7 @@
           return false
 
       teardown: ->
-        $(this).off trans
+        $(this).off('heventend')
     }
 
   aliasesEvent eventName for eventName in ['transitionend', 'animationend']

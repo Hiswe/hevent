@@ -53,6 +53,8 @@ You can build the library by running ```gulp build``` after the necessary ```npm
 
 ## Release History
 
+- **0.4.2** — Fix event.propertyName & event.elapsedTime disappearance on transitionend
+- **0.4.1** — small refactor 
 - **0.4.0** 
   - Use Modernizr for browser sniffing
   - Add custom class method: *heventAddClass, heventRemoveClass, heventToggleClass*

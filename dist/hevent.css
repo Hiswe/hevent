@@ -1154,6 +1154,41 @@ aside.h-popover {
   -ms-transition: all 0.75s;
   transition: all 0.75s;
 }
+.animation-demo-container p,
+.animation-demo-container .h-ios {
+  display: inline-block;
+  vertical-align: middle;
+}
+.animation-demo-container .h-ios {
+  width: 5em;
+}
+.animation-demo-container .animation-demo {
+  text-align: center;
+  line-height: 10em;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+  color: rgba(0,0,0,0.55);
+  width: 10em;
+  height: 10em;
+  display: inline-block;
+  vertical-align: top;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  -o-animation-fill-mode: both;
+  -ms-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: animationOut 5s;
+  -moz-animation: animationOut 5s;
+  -o-animation: animationOut 5s;
+  -ms-animation: animationOut 5s;
+  animation: animationOut 5s;
+}
+.animation-demo-container .animation-demo.active {
+  -webkit-animation: animationIn 5s;
+  -moz-animation: animationIn 5s;
+  -o-animation: animationIn 5s;
+  -ms-animation: animationIn 5s;
+  animation: animationIn 5s;
+}
 aside {
   position: absolute;
   top: 0;
@@ -1198,6 +1233,226 @@ aside a span {
   border: dashed 1px rgba(0,0,0,0.5);
   border-width: 1px 0;
   color: #222;
+}
+@-moz-keyframes animationIn {
+  0% {
+    background: rgba(0,0,0,0.5);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  100% {
+    background: rgba(223,0,111,0.5);
+  }
+}
+@-webkit-keyframes animationIn {
+  0% {
+    background: rgba(0,0,0,0.5);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  100% {
+    background: rgba(223,0,111,0.5);
+  }
+}
+@-o-keyframes animationIn {
+  0% {
+    background: rgba(0,0,0,0.5);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  100% {
+    background: rgba(223,0,111,0.5);
+  }
+}
+@-ms-keyframes animationIn {
+  0% {
+    background: rgba(0,0,0,0.5);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  100% {
+    background: rgba(223,0,111,0.5);
+  }
+}
+@keyframes animationIn {
+  0% {
+    background: rgba(0,0,0,0.5);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  100% {
+    background: rgba(223,0,111,0.5);
+  }
+}
+@-moz-keyframes animationOut {
+  0% {
+    background: rgba(223,0,111,0.5);
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  50% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  100% {
+    background: rgba(0,0,0,0.5);
+  }
+}
+@-webkit-keyframes animationOut {
+  0% {
+    background: rgba(223,0,111,0.5);
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  50% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  100% {
+    background: rgba(0,0,0,0.5);
+  }
+}
+@-o-keyframes animationOut {
+  0% {
+    background: rgba(223,0,111,0.5);
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  50% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  100% {
+    background: rgba(0,0,0,0.5);
+  }
+}
+@-ms-keyframes animationOut {
+  0% {
+    background: rgba(223,0,111,0.5);
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  50% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  100% {
+    background: rgba(0,0,0,0.5);
+  }
+}
+@keyframes animationOut {
+  0% {
+    background: rgba(223,0,111,0.5);
+    -webkit-transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -ms-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  50% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  100% {
+    background: rgba(0,0,0,0.5);
+  }
 }
 @-moz-keyframes fadeOut {
   0% {

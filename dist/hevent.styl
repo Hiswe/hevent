@@ -270,6 +270,32 @@ aside.h-popover
     &.transition
       transition all .75s
 
+.animation-demo-container
+  p,
+  .h-ios
+    display inline-block
+    vertical-align middle
+
+  .h-ios
+    width 5em
+
+  .animation-demo
+    text-align center
+    line-height 10em
+    text-shadow 1px 1px 0 blanc(.4)
+    color noir(.55)
+    width 10em; height @width
+    display inline-block
+    vertical-align top
+    animation-fill-mode both
+    animation animationOut 5s
+
+    &.active
+      animation animationIn 5s
+
+    // &.transition
+    //   transition all .75s
+
 // Github link
 aside
   absolute top right
@@ -293,6 +319,24 @@ aside
       display block; padding .25em 0
       border dashed 1px rgba(0, 0, 0, 0.5); border-width 1px 0
       color @color
+
+@keyframes animationIn
+  0%
+    background noir()
+    transform scale(1,1)
+  50%
+    transform scale(1.5,1.5)
+  100%
+    background rgba($h-pink, .5)
+
+@keyframes animationOut
+  0%
+    background rgba($h-pink, .5)
+    transform scale(1.5,1.5)
+  50%
+    transform scale(1,1)
+  100%
+    background noir()
 
 @keyframes fadeOut
   0%
