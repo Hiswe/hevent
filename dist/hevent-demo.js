@@ -8,7 +8,7 @@
     $transitionDemo
       .on('tap', function (event){
         $transitionCheck.attr('disabled', true);
-        $transitionDemo.toggleClass('active');
+        $transitionDemo.heventToggleClass('active');
       })
       .on('transitionend', function (event){
         $('<p>End</p>').prependTo($transitionFeedback);

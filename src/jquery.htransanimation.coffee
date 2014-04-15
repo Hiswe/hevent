@@ -7,7 +7,9 @@
 # Dependencies  : jquery.hclass.coffee
 #
 
-(($, document, window) ->
+(($, Modernizr,document, window) ->
+
+  return console?.warn('Modernizr should be installed for hevet to work') unless Modernizr?
 
   trace = false
   trans = 'transanimationend'
@@ -17,67 +19,31 @@
     args.unshift('[TRANS-ANIMATION]')
     console?.log?(args...)
 
-  # Utility method
-  lcFirst = (text) ->
-    text.substr(0, 1).toLowerCase() + text.substr(1)
-
-  ucFirst = (text) ->
-    text.substr(0, 1).toUpperCase() + text.substr(1)
-
   # Determine Css Animation/Transition Support
-  # see https://github.com/angular/angular.js/blob/master/src/ng/sniffer.js
+  # Based on Modernizr
+  # http://modernizr.com/docs/#prefixed
+
   sniffer = (->
-    vendorPrefix      = ''
-    cssPrefix         = ''
-    vendorRegex       = /^(Moz|webkit|O|ms)(?=[A-Z])/
-    bodyStyle         = document.body and document.body.style
-    transitions       = false
-    animations        = false
-    transAnimationW3c = false
-
-    if bodyStyle
-      for prop of bodyStyle
-        match = vendorRegex.exec(prop)
-        if match
-          vendorPrefix  = ucFirst(match[0])
-          # This is the prefix used in getComputedStyle
-          cssPrefix     = match[0]
-          break
-
-      transitions = !!(bodyStyle["transition"]? or bodyStyle["#{vendorPrefix}Transition"]?)
-      animations  = !!(bodyStyle["animation"]? or bodyStyle["#{vendorPrefix}Animation"]?)
-
-    eventList = {
-      'default': ['transitionend', 'animationend']
-      'Ms': ['MSTransitionEnd', 'MSAnimationEnd']
-      # Since Opera 12 'oTransitionEnd' is all lowercased
-      # http://ianlunn.co.uk/articles/opera-12-otransitionend-bugs-and-workarounds/
-      # 'O': ['oTransitionEnd', 'oAnimationEnd']
-      'O': ['otransitionend', 'oanimationend']
-      'Moz': ['transitionend', 'animationend']
-      'Webkit': ['webkitTransitionEnd', 'webkitAnimationEnd']
+    transEndEventNames = {
+      'transition'      :'transitionend'
+      'msTransition'    :'MSTransitionEnd'
+      'OTransition'     :'oTransitionEnd'
+      'MozTransition'   :'transitionend'
+      'WebkitTransition':'webkitTransitionEnd'
     }
 
-    if transitions is off and animations is off
-      transitionEvent   = animationEvent = ''
-
-    else if vendorPrefix is ''
-      transitionEvent   = eventList.default[0]
-      animationEvent    = eventList.default[1]
-      transAnimationW3c = true
-    else
-      transitionEvent   = eventList[vendorPrefix][0]
-      animationEvent    = eventList[vendorPrefix][1]
+    animationEndEventNames = {
+      'animation'       :'animationend'
+      'msAnimation'     :'MSAnimationEnd'
+      'OAnimation'      :'oAnimationEnd'
+      'MozAnimation'    :'animationend'
+      'WebkitAnimation' :'webkitAnimationEnd'
+    }
 
     return {
-      vendorPrefix:           vendorPrefix
-      cssPrefix:              cssPrefix
-      transitions:            transitions
-      animations:             animations
-      transAnimationSupport:  transitions is on and animations is on
-      transitionend:          transitionEvent
-      animationend:           animationEvent
-      transAnimationW3c:      transAnimationW3c
+      transAnimationSupport:  Modernizr.cssanimations is on and Modernizr.csstransitions is on
+      transitionend:          transEndEventNames[ Modernizr.prefixed('transition') ]
+      animationend:           animationEndEventNames[ Modernizr.prefixed('animation') ]
     }
   )()
 
@@ -168,4 +134,4 @@
 
   aliasesEvent eventName for eventName in ['transitionend', 'animationend']
 
-)(jQuery, document, window)
+)(jQuery, Modernizr, document, window)

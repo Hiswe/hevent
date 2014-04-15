@@ -1,8 +1,8 @@
 'use strict';
 
 var gulp        = require('gulp');
-var path        = require('./gulp-path.js');
 var bump        = require('gulp-bump');
+var wait        = require('gulp-wait');
 var exec        = require('gulp-exec');
 var clean       = require('gulp-clean');
 var gutil       = require('gulp-util');
@@ -13,9 +13,17 @@ var uglify      = require('gulp-uglify');
 var rename      = require('gulp-rename');
 var coffee      = require('gulp-coffee');
 var header      = require('gulp-header');
+var notify      = require('gulp-notify');
+// SERVER
+var open        = require('gulp-open');
+var lr          = require('tiny-lr')();
+var open        = require('gulp-open');
+var express     = require('express');
+var connectLr   = require('connect-livereload');
+var gulpLr      = require('gulp-livereload');
+// CONFIG
+var config      = require('./gulp-config.js');
 var pkg         = require('./package.json');
-// var notify      = require('gulp-notify');
-
 var banner = ['/**',
   ' * <%= pkg.name %> - <%= pkg.description %>',
   ' * @version v<%= pkg.version %>',
@@ -29,15 +37,15 @@ var banner = ['/**',
 /////////
 
 gulp.task('patch', function () {
-  return gulp.src(path.pack).pipe(bump()).pipe(gulp.dest('./'));
+  return gulp.src(config.pack).pipe(bump()).pipe(gulp.dest('./'));
 });
 
 gulp.task('minor', function() {
-  return gulp.src(path.pack).pipe(bump({type:'minor'})).pipe(gulp.dest('./'));
+  return gulp.src(config.pack).pipe(bump({type:'minor'})).pipe(gulp.dest('./'));
 });
 
 gulp.task('major', function() {
-  return gulp.src(path.pack).pipe(bump({type:'major'})).pipe(gulp.dest('./'));
+  return gulp.src(config.pack).pipe(bump({type:'major'})).pipe(gulp.dest('./'));
 });
 
 gulp.task('tag', function () {
@@ -51,7 +59,6 @@ gulp.task('tag', function () {
 
   console.log('git tag -a '+pkg.version+' -m "'+message+'"');
   console.log('git push origin master --tags');
-  // console.log('npm publish');
 
   // return gulp.src('./')
   //   .pipe(git.commit(message, {args: '-a'}))
@@ -63,22 +70,22 @@ gulp.task('tag', function () {
 /////////
 
 gulp.task('clean-font', function() {
-  return gulp.src(path.font.dst, {read: false}).pipe(clean());
+  return gulp.src(config.font.dst, {read: false}).pipe(clean());
 });
 
 gulp.task('font', ['clean-font'], function() {
-  return gulp.src(path.font.src, {base: path.font.base})
-    .pipe(gulp.dest(path.font.dst));
+  return gulp.src(config.font.src, {base: config.font.base})
+    .pipe(gulp.dest(config.font.dst));
 });
 
 gulp.task('clean-lib', function() {
-  return gulp.src(path.lib.dst + '/*.js', {read: false}).pipe(clean());
+  return gulp.src(config.lib.dst + '/*.js', {read: false}).pipe(clean());
 });
 
 gulp.task('lib', ['clean-lib'], function() {
-  gutil.log(gutil.colors.yellow('Don\'t forget to build ./bower_components/PointerGestures \n cd ./bower_components/PointerGestures && npm instal && grunt'));
-  return gulp.src(path.lib.src)
-    .pipe(gulp.dest(path.lib.dst));
+  gutil.log(gutil.colors.yellow('Don\'t forget to build ./bower_components/PointerGestures \n cd ./bower_components/PointerGestures && npm install && grunt'));
+  return gulp.src(config.lib.src)
+    .pipe(gulp.dest(config.lib.dst));
 });
 
 // gulp.task('pointer-gestures', function() {
@@ -92,18 +99,20 @@ gulp.task('assets', ['lib', 'font']);
 /////////
 
 gulp.task('clean-css', function() {
-  return gulp.src(path.stylus.dst + '/hevent.css', {read: false}).pipe(clean());
+  return gulp.src(config.stylus.dst + '/hevent.css', {read: false}).pipe(clean());
 });
 
 gulp.task('stylus', ['clean-css'], function () {
-  gulp.src(path.stylus.src)
+  gulp.src(config.stylus.src)
     .pipe(stylus({
       use: [require('nib')(), require('hstrap')()],
       import: ['nib', 'hstrap'],
       urlFunc: ['embedurl'],
       set:['resolve url']
     }))
-    .pipe(gulp.dest(path.stylus.dst))
+    .pipe(gulp.dest(config.stylus.dst))
+    .pipe(gulpLr(lr))
+    .pipe(notify({title: 'HEVENT', message: 'CSS build done'}))
 });
 
 /////////
@@ -111,18 +120,55 @@ gulp.task('stylus', ['clean-css'], function () {
 /////////
 
 gulp.task('build', ['clean-js'], function(){
-  return gulp.src(path.plugin.src)
+  return gulp.src(config.plugin.src)
     .pipe(gulpif(/[.]coffee$/, coffee({join: true, bare: true})))
-    .pipe(header(banner, { pkg : pkg } ))
     .pipe(concat('jquery.hevent.js'))
-    .pipe(gulp.dest(path.plugin.dst))
+    .pipe(header(banner, { pkg : pkg } ))
+    .pipe(gulp.dest(config.plugin.dst))
     .pipe(uglify())
     .pipe(rename('jquery.hevent.min.js'))
-    .pipe(gulp.dest(path.plugin.dst))
+    .pipe(header(banner, { pkg : pkg } ))
+    .pipe(gulp.dest(config.plugin.dst))
+    .pipe(gulpLr(lr))
+    .pipe(notify({title: 'HEVENT', message: 'Plugin build done'}))
 });
 
 gulp.task('clean-js', function() {
-  return gulp.src(path.lib.dst + '/*.js', {read: false}).pipe(clean());
+  return gulp.src(config.plugin.dst + '/*.js', {read: false}).pipe(clean());
+});
+
+/////////
+// SERVER
+/////////
+
+// WATCH
+gulp.task('watch', function() {
+  gulp.watch(['src/*.coffee'], ['build']);
+  gulp.watch(['dist/hevent.styl'], ['stylus']);
+  gulp.watch('./index.html').on('change', function(event) {
+    gulp.src('').pipe(notify({title: 'HEVENT', message: 'reload html'}));
+    lr.changed({body: {files: event.path}});
+  });
+});
+
+// SERVER
+var startExpress = function startExpress() {
+  var app = express();
+  app.use(connectLr());
+  app.use(express.static(__dirname));
+  app.listen(3000);
+};
+
+gulp.task('express', function(cb){
+  startExpress();
+  lr.listen(35729);
+  cb();
+});
+
+gulp.task('server', ['express', 'watch']);
+
+gulp.task("start", ['server'], function(){
+  gulp.src('./README.md').pipe(wait(1000)).pipe(open('', {url: "http://localhost:3000"}));
 });
 
 /////////

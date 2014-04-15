@@ -26,9 +26,10 @@ exports.stylus = {
 exports.lib = {
   src: [
     'bower_components/pointerevents-polyfill/pointerevents.min.js',
+    'bower_components/modernizr/modernizr.js',
     'bower_components/PointerGestures/pointergestures.min.js',
     'bower_components/jquery/dist/jquery.min.js',
     'bower_components/jquery-pointer-events/src/pointer.js'
   ],
-  dst: 'dist/media'
+  dst: 'dist/lib'
 };

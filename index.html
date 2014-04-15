@@ -22,34 +22,30 @@
   </menu>
 
   <div class="container">
-    <h3 class="hs-title">Overview</h3>
     <p>
       <b>Hevent</b> is a jQuery plugin that enable <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations">transitionend/animationend events</a>.
     </p>
     <section id="transitions">
-      <h2>Transitions/Animations</h2>
-      <div class="hs-box">
-        <p>Support for transitionend/animationend.</p>
-        <p>The callback will fire even without support <b>or</b> if the animation/transition is not anymore applied at this time.</p>
-        <p class="danger">In opera the transition event <a href="http://ianlunn.co.uk/articles/opera-12-otransitionend-bugs-and-workarounds/">will fire twice</a></p>
-        <div class="h-box-inset transition-demo-container">
-          <div>
-            <p>Transition/Animation support:&nbsp;</p>
-            <div class="h-ios">
-              <input type="checkbox" id="transition-check">
-              <label class="h-label" for="transition-check" />
-            </div>
+      <p>The callback will fire even without support <b>or</b> if the animation/transition is not anymore applied at this time.</p>
+      <p class="danger">In opera the transition event <a href="http://ianlunn.co.uk/articles/opera-12-otransitionend-bugs-and-workarounds/">will fire twice</a></p>
+      <div class="h-box-inset transition-demo-container">
+        <div>
+          <p>Transition/Animation support:&nbsp;</p>
+          <div class="h-ios">
+            <input type="checkbox" id="transition-check">
+            <label class="h-label" for="transition-check" />
           </div>
-          <div class="transition-demo">Click to animate</div>
-          <div class="feedback"></div>
         </div>
+        <div class="transition-demo">Click to animate</div>
+        <div class="feedback"></div>
       </div>
     </section>
   </div>
-  <script src="dist/media/pointerevents.min.js"></script>
-  <script src="dist/media/pointergestures.min.js"></script>
-  <script src="dist/media/jquery.min.js"></script>
-  <script src="dist/media/pointer.js"></script>
+  <script src="dist/lib/pointerevents.min.js"></script>
+  <script src="dist/lib/pointerevents.min.js"></script>
+  <script src="dist/lib/modernizr.js"></script>
+  <script src="dist/lib/jquery.min.js"></script>
+  <script src="dist/lib/pointer.js"></script>
   <script src="build/jquery.hevent.js"></script>
   <script src="dist/hevent-demo.js"></script>
 </body>
