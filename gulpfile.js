@@ -56,9 +56,8 @@ gulp.task('tag', function () {
   console.log(gutil.colors.red("DON'T FORGET TO UPDATE README.md"));
 
   console.log('git ci -am "'+message+'"');
-
   console.log('git tag -a '+pkg.version+' -m "'+message+'"');
-  console.log('git push origin master --tags');
+  console.log('git push --tags');
 
   // return gulp.src('./')
   //   .pipe(git.commit(message, {args: '-a'}))

@@ -28,7 +28,6 @@
   # Determine Css Animation/Transition Support
   # Based on Modernizr
   # http://modernizr.com/docs/#prefixed
-
   sniffer = (->
     transEndEventNames = {
       'transition'      :'transitionend'
@@ -87,9 +86,10 @@
     log('isAnimated', animated)
     animated
 
-  # Make a jQuery special event
-  # transanimationend
+  # Make a jQuery special event:
+  # heventend
   # this is a common event for both transitionend & animationend
+  # Here we can hook it and check to custom classChange event
   $.event.special.heventend = {
 
     sniffer: sniffer
@@ -135,10 +135,10 @@
   }
 
   # Aliases transitionend & animationend
-  # so they point to transanimationend events
+  # so they point to heventend events
   aliasesEvent = (eventName) ->
-    # if eventName is sniffer[eventName]
-    #   log('add fixHooks for', eventName)
+    # Don't normalize those properties
+    # http://learn.jquery.com/events/event-extensions/#jquery-event-fixhooks-object
     jQuery.event.fixHooks[eventName] = {
       props: ['propertyName', 'elapsedTime']
     }
