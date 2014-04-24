@@ -1171,23 +1171,39 @@ aside.h-popover {
   height: 10em;
   display: inline-block;
   vertical-align: top;
-  -webkit-animation-fill-mode: both;
-  -moz-animation-fill-mode: both;
-  -o-animation-fill-mode: both;
-  -ms-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation: animationOut 5s;
-  -moz-animation: animationOut 5s;
-  -o-animation: animationOut 5s;
-  -ms-animation: animationOut 5s;
-  animation: animationOut 5s;
+  background: rgba(0,183,224,0.5);
 }
 .animation-demo-container .animation-demo.active {
-  -webkit-animation: animationIn 5s;
-  -moz-animation: animationIn 5s;
-  -o-animation: animationIn 5s;
-  -ms-animation: animationIn 5s;
-  animation: animationIn 5s;
+  background: rgba(223,0,111,0.5);
+}
+.animation-demo-container .animation-demo.animation {
+  -webkit-animation-name: animationIn;
+  -moz-animation-name: animationIn;
+  -o-animation-name: animationIn;
+  -ms-animation-name: animationIn;
+  animation-name: animationIn;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  -o-animation-duration: 1s;
+  -ms-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+.animation-demo-container .animation-demo.animation.active {
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: animationOut;
+  -moz-animation-name: animationOut;
+  -o-animation-name: animationOut;
+  -ms-animation-name: animationOut;
+  animation-name: animationOut;
 }
 aside {
   position: absolute;
@@ -1236,222 +1252,92 @@ aside a span {
 }
 @-moz-keyframes animationIn {
   0% {
-    background: rgba(0,0,0,0.5);
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-
-  50% {
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
+    background: rgba(223,0,111,0.5);
   }
 
   100% {
-    background: rgba(223,0,111,0.5);
+    background: rgba(0,183,224,0.5);
   }
 }
 @-webkit-keyframes animationIn {
   0% {
-    background: rgba(0,0,0,0.5);
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-
-  50% {
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
+    background: rgba(223,0,111,0.5);
   }
 
   100% {
-    background: rgba(223,0,111,0.5);
+    background: rgba(0,183,224,0.5);
   }
 }
 @-o-keyframes animationIn {
   0% {
-    background: rgba(0,0,0,0.5);
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-
-  50% {
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
+    background: rgba(223,0,111,0.5);
   }
 
   100% {
-    background: rgba(223,0,111,0.5);
+    background: rgba(0,183,224,0.5);
   }
 }
 @-ms-keyframes animationIn {
   0% {
-    background: rgba(0,0,0,0.5);
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-
-  50% {
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
+    background: rgba(223,0,111,0.5);
   }
 
   100% {
-    background: rgba(223,0,111,0.5);
+    background: rgba(0,183,224,0.5);
   }
 }
 @keyframes animationIn {
   0% {
-    background: rgba(0,0,0,0.5);
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-
-  50% {
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
+    background: rgba(223,0,111,0.5);
   }
 
   100% {
-    background: rgba(223,0,111,0.5);
+    background: rgba(0,183,224,0.5);
   }
 }
 @-moz-keyframes animationOut {
   0% {
-    background: rgba(223,0,111,0.5);
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
-  }
-
-  50% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
+    background: rgba(0,183,224,0.5);
   }
 
   100% {
-    background: rgba(0,0,0,0.5);
+    background: rgba(223,0,111,0.75);
   }
 }
 @-webkit-keyframes animationOut {
   0% {
-    background: rgba(223,0,111,0.5);
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
-  }
-
-  50% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
+    background: rgba(0,183,224,0.5);
   }
 
   100% {
-    background: rgba(0,0,0,0.5);
+    background: rgba(223,0,111,0.75);
   }
 }
 @-o-keyframes animationOut {
   0% {
-    background: rgba(223,0,111,0.5);
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
-  }
-
-  50% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
+    background: rgba(0,183,224,0.5);
   }
 
   100% {
-    background: rgba(0,0,0,0.5);
+    background: rgba(223,0,111,0.75);
   }
 }
 @-ms-keyframes animationOut {
   0% {
-    background: rgba(223,0,111,0.5);
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
-  }
-
-  50% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
+    background: rgba(0,183,224,0.5);
   }
 
   100% {
-    background: rgba(0,0,0,0.5);
+    background: rgba(223,0,111,0.75);
   }
 }
 @keyframes animationOut {
   0% {
-    background: rgba(223,0,111,0.5);
-    -webkit-transform: scale(1.5, 1.5);
-    -moz-transform: scale(1.5, 1.5);
-    -o-transform: scale(1.5, 1.5);
-    -ms-transform: scale(1.5, 1.5);
-    transform: scale(1.5, 1.5);
-  }
-
-  50% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    transform: scale(1, 1);
+    background: rgba(0,183,224,0.5);
   }
 
   100% {
-    background: rgba(0,0,0,0.5);
+    background: rgba(223,0,111,0.75);
   }
 }
 @-moz-keyframes fadeOut {

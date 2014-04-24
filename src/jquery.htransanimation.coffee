@@ -11,7 +11,7 @@
 
   return console?.warn('Modernizr should be installed for hevet to work') unless Modernizr?
 
-  trace = false
+  trace = true
 
   # Utility method
   log   = (args...) ->
@@ -46,21 +46,17 @@
     }
 
     result =  {
+      transitionendSupport:   Modernizr.csstransitions is on
+      animationendSupport:    Modernizr.cssanimations is on
       transAnimationSupport:  Modernizr.cssanimations is on and Modernizr.csstransitions is on
       transitionend:          transEndEventNames[ Modernizr.prefixed('transition') ]
       animationend:           animationEndEventNames[ Modernizr.prefixed('animation') ]
+      durations:              [Modernizr.prefixed('TransitionDuration'), Modernizr.prefixed('AnimationDuration')]
     }
     log('sniffer', result)
     result
 
   )()
-
-  triggerCustomEvent = (obj, eventType, event) ->
-    log('triggerCustomEvent', event)
-    originalType = event.type
-    event.type = eventType
-    $.event.dispatch.call(obj, event)
-    event.type = originalType
 
   # Check if an element is currently animated
   # It can happen in two ways
@@ -71,20 +67,27 @@
   # to the element (like media queries, no-animation class, etc.)
 
   isAnimated = (el) ->
-    log('isAnimated', 'begin animation check')
     return false unless sniffer.transAnimationSupport
-    # Test if slide elements has animations or transitions
+
+    # Test if elements has animations or transitions
     style       = window.getComputedStyle(el) or {}
-    prefix      = sniffer.cssPrefix
     animated    = false
 
-    for key in ["TransitionDuration", "AnimationDuration"]
-      hasDuration = style[lcFirst(key)] or style["#{prefix}#{key}"]
+    for key in sniffer.durations
+      hasDuration = style[lcFirst(key)]
       if hasDuration? and hasDuration isnt '' and hasDuration isnt '0s'
         animated = true
         break
-    log('isAnimated', animated)
+    log('[IS ANIMATED]', animated)
     animated
+
+  #
+  triggerCustomEvent = (obj, eventType, event) ->
+    log('[TRIGGER CUSTOM EVENT]', event)
+    originalType = event.type
+    event.type = eventType
+    $.event.dispatch.call(obj, event)
+    event.type = originalType
 
   # Make a jQuery special event:
   # heventend
@@ -104,15 +107,15 @@
       $this.on 'classChange', (event) ->
         $.event.special.heventend.handleClassChange(thisObject, event, eventName)
 
-      # Regular case
+      # Regular case: no need to aliase a prefixed DOM event
       if eventName is sniffer[eventName]
-        log('W3C event name')
+        log('W3C event', eventName)
         return false
 
       # redirect prefixed transition to W3C one
       $this.on sniffer[eventName], (event) ->
-        log('event', event)
-        $.event.special.heventend.fireEvent(thisObject, event.target, eventName)
+        log('original event', event)
+        $.event.special.heventend.fireEvent(thisObject, event, eventName)
 
     teardown: (namespaces) ->
       $this = $(this)
@@ -122,16 +125,34 @@
 
     handleClassChange: (thisObject, event, eventName) ->
       origTarget = event.target
-      log('handleClassChange', event)
+      log('[HANDLE CLASS CHANGE]', event)
       ev = $.Event('heventend', { target: origTarget })
       triggerCustomEvent( thisObject, 'heventend', ev )
       return true if isAnimated(thisObject)
-      $.event.special.heventend.fireEvent(thisObject, origTarget, eventName)
+      $.event.special.heventend.fireEvent(thisObject, event, eventName)
 
-    fireEvent: (thisObject, origTarget, eventName) ->
-      log('fireEvent')
-      ev = $.Event( eventName, { target: origTarget })
-      triggerCustomEvent( thisObject, eventName, ev)
+    # proxy prefixed event to non-prefixed one
+    fireEvent: (thisObject, event, eventName) ->
+      log('[FIRE EVENT]', event.type)
+
+      if event.type is sniffer[eventName] or event.type is eventName
+        log('[FIRE EVENT]', 'use DOM originalEvent')
+        originalEvent = event
+      else
+        log('[FIRE EVENT]', 'Create custom original')
+        # Simulate an original event
+        # this is to be able to determine if it's truly an *end
+        # or a simulated one
+        originalEvent = $.Event( 'hevent', {target: event.target})
+
+      # Create a new jquery Event
+      # https://api.jquery.com/category/events/event-object/
+      newEvent         = $.Event( eventName, {
+        target: event.target
+        originalEvent: originalEvent
+      })
+      log('[FIRE EVENT] final event')
+      $.event.dispatch.call(thisObject, newEvent)
   }
 
   # Aliases transitionend & animationend
@@ -148,8 +169,8 @@
         $(this).on('heventend', {hevent: eventName}, $.noop)
         # Returning false tells jQuery to bind the specified event handler using native DOM methods.
         # http://benalman.com/news/2010/03/jquery-special-events/#api-setup
-        if eventName is sniffer[eventName]
-          log('Use original event for', eventName)
+        if sniffer[eventName + 'Support']
+          log('Use browser event for', eventName)
           return false
 
       teardown: ->

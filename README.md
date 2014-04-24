@@ -51,6 +51,12 @@ Here is the list of all additional method
 
 You can build the library by running ```gulp build``` after the necessary ```npm install & bower install```
 
+## Todo
+
+- make an *animationend* example
+- simulate *event.propertyName* & *event.elapsedTime* when transitionend is simulated 
+- test with [gulp-qunit](https://www.npmjs.org/package/gulp-qunit)
+
 ## Release History
 
 - **0.4.2** — Fix event.propertyName & event.elapsedTime disappearance on transitionend

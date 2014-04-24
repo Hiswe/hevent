@@ -287,14 +287,33 @@ aside.h-popover
     width 10em; height @width
     display inline-block
     vertical-align top
-    animation-fill-mode both
-    animation animationOut 5s
+    background rgba($h-blue, .5)
 
     &.active
-      animation animationIn 5s
+      background rgba($h-pink, .5)
 
-    // &.transition
-    //   transition all .75s
+    &.animation
+      animation-name animationIn
+      animation-duration 1s
+      animation-fill-mode forwards
+
+      &.active
+        animation-fill-mode forwards
+        animation-name animationOut
+
+@keyframes animationIn
+  0%
+    background rgba($h-pink, .5)
+
+  100%
+    background rgba($h-blue, .5)
+
+@keyframes animationOut
+  0%
+    background rgba($h-blue, .5)
+
+  100%
+    background rgba($h-pink, .75)
 
 // Github link
 aside
@@ -320,23 +339,6 @@ aside
       border dashed 1px rgba(0, 0, 0, 0.5); border-width 1px 0
       color @color
 
-@keyframes animationIn
-  0%
-    background noir()
-    transform scale(1,1)
-  50%
-    transform scale(1.5,1.5)
-  100%
-    background rgba($h-pink, .5)
-
-@keyframes animationOut
-  0%
-    background rgba($h-pink, .5)
-    transform scale(1.5,1.5)
-  50%
-    transform scale(1,1)
-  100%
-    background noir()
 
 @keyframes fadeOut
   0%
