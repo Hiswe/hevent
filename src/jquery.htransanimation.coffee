@@ -1,7 +1,7 @@
 #
 # Name          : htransanimation
 # Author        : Hiswe halya, https://github.com/hiswe
-# Version       : 0.4.4
+# Version       : 0.4.5
 # Repo          : git://github.com/Hiswe/hevent
 # Website       : https://github.com/Hiswe/hevent
 # Dependencies  : Modernizr, jQuery, jquery.hclass.coffee
@@ -9,7 +9,7 @@
 
 (($, Modernizr,document, window) ->
 
-  return console?.warn('Modernizr should be installed for hevet to work') unless Modernizr?
+  return console?.warn('Modernizr should be installed for hevent to work') unless Modernizr?
 
   trace = false
 

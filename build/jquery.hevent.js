@@ -1,6 +1,6 @@
 /**
  * hevent - Css animations & transitions events for all browsers
- * @version v0.4.4
+ * @version v0.4.5
  * @link http://hiswe.github.io/hevent/
  * @license WTFPL
  */
@@ -18,10 +18,11 @@
       return $.fn[heventMethod] = function(className) {
         window.setTimeout((function(_this) {
           return function() {
+            jQuery.fn[orginalMethod].apply(_this, [className]);
             return $(_this).trigger('classChange');
           };
         })(this), 1);
-        return jQuery.fn[orginalMethod].apply(this, [className]);
+        return this;
       };
     })());
   }
@@ -33,7 +34,7 @@ var __slice = [].slice;
 (function($, Modernizr, document, window) {
   var aliasesEvent, eventName, isAnimated, lcFirst, log, sniffer, trace, triggerCustomEvent, ucFirst, _i, _len, _ref, _results;
   if (Modernizr == null) {
-    return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should be installed for hevet to work') : void 0;
+    return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should be installed for hevent to work') : void 0;
   }
   trace = false;
   log = function() {
