@@ -7,7 +7,7 @@
 - [Jquery](http://jquery.com/)
 - [Modernizr](http://modernizr.com/)
 
-see [bower.json](https://github.com/Hiswe/hevent/blob/master/bower.json) for more detail
+see [bower.json](https://github.com/Hiswe/hevent/blob/master/bower.json) for more details
 
 
 ## Easy transitionend/animationend 
@@ -53,12 +53,14 @@ You can build the library by running ```gulp build``` after the necessary ```npm
 
 ## Todo
 
-- make an *animationend* example
-- simulate *event.propertyName* & *event.elapsedTime* when transitionend is simulated 
 - test with [gulp-qunit](https://www.npmjs.org/package/gulp-qunit)
 
 ## Release History
 
+- **0.4.3**
+  - Fix behavior with non w3c events
+  - Always send an ```event.originalEvent```   
+  ```event.originalEvent.type``` is ```hevent``` when it's using the fallback 
 - **0.4.2** — Fix event.propertyName & event.elapsedTime disappearance on transitionend
 - **0.4.1** — small refactor 
 - **0.4.0** 

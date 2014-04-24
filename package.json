@@ -1,7 +1,7 @@
 {
   "name": "hevent",
   "description": "Css animations & transitions events for all browsers",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "homepage": "http://hiswe.github.io/hevent/",
   "repository": {
     "type": "git",

@@ -181,6 +181,7 @@ gulp.task('default', function() {
   console.log(gutil.colors.red('patch'), '  ', 'patch version of json');
   console.log(gutil.colors.red('minor'), '  ', 'minor version of json');
   console.log(gutil.colors.red('major'), '  ', 'major version of json');
+  console.log(gutil.colors.red('tag'), '    ', 'taaag');
   console.log(gutil.colors.red('assets'), ' ', 'Copy fonts & libs');
   console.log(gutil.colors.red('build'), '  ', 'Build plugin');
   console.log(gutil.colors.red('start'), '  ', 'Demo tiny server with lr');
