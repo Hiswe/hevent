@@ -1,6 +1,6 @@
 /**
  * hevent - Css animations & transitions events for all browsers
- * @version v0.4.3
+ * @version v0.4.4
  * @link http://hiswe.github.io/hevent/
  * @license WTFPL
  */
@@ -35,7 +35,7 @@ var __slice = [].slice;
   if (Modernizr == null) {
     return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should be installed for hevet to work') : void 0;
   }
-  trace = true;
+  trace = false;
   log = function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];

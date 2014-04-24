@@ -2,7 +2,7 @@
 
 [demo](http://hiswe.github.io/hevent/)
 
-##### Depends on 
+##### Depends on
 
 - [Jquery](http://jquery.com/)
 - [Modernizr](http://modernizr.com/)
@@ -10,9 +10,9 @@
 see [bower.json](https://github.com/Hiswe/hevent/blob/master/bower.json) for more details
 
 
-## Easy transitionend/animationend 
+## Easy transitionend/animationend
 
-In your jQuery code you just have to do 
+In your jQuery code you just have to do
 
 ```
 $('selector').on('transitionend' , callback)
@@ -24,21 +24,21 @@ And the event will be aliased to whatever browser event is.
 Here is one example:
 
 ```
-$('selector').on('transitionend' , callback);
+$('selector').on('transitionend' , callback);  
 $('selector').toggleClass('animatedClass');
 ```
 
 The callback may not be called if another css rule remove a CSS transition or animation (like in responsive)… So you have to handle this in your JS.
 
-Or you can use this: 
+Or you can use this:
 
 ```
 $('selector').on('transitionend' , callback);
 $('selector').heventToggleClass('animatedClass');
 ```
 
-The callback will fire after the transition/animation end   
-**or**   
+The callback will fire after the transition/animation end
+**or**
 if no animation/transition is detected just fire quite immediatly.
 
 Here is the list of all additional method
@@ -49,7 +49,7 @@ Here is the list of all additional method
 
 ## Build
 
-You can build the library by running ```gulp build``` after the necessary ```npm install & bower install```
+You can build the library by running ```gulp build``` after the necessary ```npm install && bower install```
 
 ## Todo
 
@@ -57,13 +57,14 @@ You can build the library by running ```gulp build``` after the necessary ```npm
 
 ## Release History
 
+- **0.4.4** Remove plugin logs
 - **0.4.3**
   - Fix behavior with non w3c events
-  - Always send an ```event.originalEvent```   
-  ```event.originalEvent.type``` is ```hevent``` when it's using the fallback 
+  - Always send an ```event.originalEvent```  
+  ```event.originalEvent.type``` is ```hevent``` when it's using the fallback
 - **0.4.2** — Fix event.propertyName & event.elapsedTime disappearance on transitionend
-- **0.4.1** — small refactor 
-- **0.4.0** 
+- **0.4.1** — small refactor
+- **0.4.0**
   - Use Modernizr for browser sniffing
   - Add custom class method: *heventAddClass, heventRemoveClass, heventToggleClass*
 - **0.3.0** — Remove pointerEvents support. You should instead use:

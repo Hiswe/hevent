@@ -9,6 +9,7 @@ exports.plugin = {
     'src/jquery.hclass.coffee',
     'src/jquery.htransanimation.coffee'
   ],
+  srcFolder: 'src',
   dst: 'build'
 };
 

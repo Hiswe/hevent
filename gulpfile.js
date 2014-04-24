@@ -14,6 +14,7 @@ var rename      = require('gulp-rename');
 var coffee      = require('gulp-coffee');
 var header      = require('gulp-header');
 var notify      = require('gulp-notify');
+var replace     = require('gulp-replace');
 // SERVER
 var open        = require('gulp-open');
 var lr          = require('tiny-lr')();
@@ -123,10 +124,13 @@ gulp.task('stylus', ['clean-css'], function () {
 
 gulp.task('build', ['clean-js'], function(){
   return gulp.src(config.plugin.src)
+    .pipe(gulpif(/[.]coffee$/, replace(/\d+\.\d+\.\d+/, pkg.version)))
+    .pipe(gulp.dest(config.plugin.srcFolder))
     .pipe(gulpif(/[.]coffee$/, coffee({join: true, bare: true})))
     .pipe(concat('jquery.hevent.js'))
     .pipe(header(banner, { pkg : pkg } ))
     .pipe(gulp.dest(config.plugin.dst))
+    .pipe(replace(/(trace\s=\s)(true)/, '$1false'))
     .pipe(uglify())
     .pipe(rename('jquery.hevent.min.js'))
     .pipe(header(banner, { pkg : pkg } ))
