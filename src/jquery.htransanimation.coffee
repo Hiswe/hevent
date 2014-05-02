@@ -1,7 +1,7 @@
 #
 # Name          : htransanimation
 # Author        : Hiswe halya, https://github.com/hiswe
-# Version       : 0.4.5
+# Version       : 0.4.6
 # Repo          : git://github.com/Hiswe/hevent
 # Website       : https://github.com/Hiswe/hevent
 # Dependencies  : Modernizr, jQuery, jquery.hclass.coffee

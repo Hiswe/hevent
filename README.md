@@ -56,9 +56,11 @@ You can build the library by running ```gulp build``` after the necessary ```npm
 - Automatically remove logs on build 
 - test with [gulp-qunit](https://www.npmjs.org/package/gulp-qunit)
 
-
 ## Release History
 
+- **0.4.6**  
+  - Fix of event aliases
+  - point to the right element when determining if there is an animation
 - **0.4.5**  — Fix transition not happening on Firefox after an addClass.  
   see [this stackoverflow post](http://stackoverflow.com/questions/7069167/css-transition-not-firing) fore more details
 - **0.4.4**  — Remove plugin logs
