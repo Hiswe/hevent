@@ -1,16 +1,19 @@
 (function ($, document, window){
   $(function (){
 
-    var $transitionFeedback   = $('#transitions .feedback');
-    var $transitionDemo       = $('.transition-demo');
-    var $transitionCheck      = $('#transition-check');
+    var $transitionFeedback         = $('#transitions .feedback');
+    var $transitionDemoContainer    = $('.transition-demo-container')
+    var $transitionDemo             = $('.transition-demo');
+    var $transitionCheck            = $('#transition-check');
 
-    $transitionDemo
-      .on('tap', function (event){
+    $transitionDemoContainer
+      // try with delegated events
+      .on('tap', '.transition-demo', function (event){
         $transitionCheck.attr('disabled', true);
         $transitionDemo.heventToggleClass('active');
-      })
-      .on('transitionend', function (event){
+      });
+
+    $transitionDemo.on('transitionend', function (event){
         $transitionCheck.attr('disabled', false);
         // console.log(event.propertyName, event.elapsedTime);
         // console.log(event.originalEvent.type);
@@ -43,7 +46,5 @@
         var e = event.originalEvent;
         $('<p>' + e.type + '</p>').prependTo($animationFeedback);
       });
-
-
   });
 })(jQuery, document, window);

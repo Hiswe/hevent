@@ -128,7 +128,7 @@
       log('[HANDLE CLASS CHANGE]', event)
       ev = $.Event('heventend', { target: origTarget })
       triggerCustomEvent( thisObject, 'heventend', ev )
-      return true if isAnimated(thisObject)
+      return true if isAnimated(origTarget)
       $.event.special.heventend.fireEvent(thisObject, event, eventName)
 
     # proxy prefixed event to non-prefixed one
@@ -177,6 +177,7 @@
         $(this).off('heventend')
     }
 
-  aliasesEvent eventName for eventName in ['transitionend', 'animationend']
+  for eventName in ['transitionend', 'animationend']
+    do (eventName) -> aliasesEvent(eventName )
 
 )(jQuery, Modernizr, document, window)
