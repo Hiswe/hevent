@@ -58,6 +58,7 @@ You can build the library by running ```gulp build``` after the necessary ```npm
 
 ## Release History
 
+- **0.4.7** – Fix Firefox issue with hevent firing even when a transitionend/animationed was active. 
 - **0.4.6**  
   - Fix of event aliases
   - point to the right element when determining if there is an animation
