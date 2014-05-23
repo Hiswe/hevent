@@ -89,6 +89,11 @@ var __slice = [].slice;
     _ref = sniffer.durations;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       key = _ref[_i];
+      hasDuration = style[key];
+      if ((hasDuration != null) && hasDuration !== '' && hasDuration !== '0s') {
+        animated = true;
+        break;
+      }
       hasDuration = style[lcFirst(key)];
       if ((hasDuration != null) && hasDuration !== '' && hasDuration !== '0s') {
         animated = true;

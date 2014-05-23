@@ -74,6 +74,12 @@
     animated    = false
 
     for key in sniffer.durations
+      # Sometines it doesn't need to be lcFirst
+      hasDuration = style[key]
+      if hasDuration? and hasDuration isnt '' and hasDuration isnt '0s'
+        animated = true
+        break
+      # But let's  also try with lcFirst
       hasDuration = style[lcFirst(key)]
       if hasDuration? and hasDuration isnt '' and hasDuration isnt '0s'
         animated = true
