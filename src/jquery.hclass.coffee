@@ -1,7 +1,7 @@
 #
 # Name          : hclass
 # Author        : Hiswe halya, https://github.com/hiswe
-# Version       : 0.4.6
+# Version       : 0.4.8
 # Repo          : git://github.com/Hiswe/hevent
 # Website       : https://github.com/Hiswe/hevent
 # Dependencies  : Modernizr, jQuery, jquery.hclass.coffee
@@ -20,7 +20,7 @@
 # http://ricostacruz.com/jquery.transit/
 #
 
-(($, document, window) ->
+hclass = ($) ->
 
   aliases = {
     heventAddClass:     'addClass'
@@ -40,5 +40,16 @@
 
         return this
 
-
-)(jQuery, document, window)
+# UMD
+# https://github.com/umdjs/umd/blob/master/jqueryPluginCommonjs.js
+((factory) ->
+  if typeof define is 'function' and define.amd
+    # AMD. Register as an anonymous module.
+    define(['jquery'], factory)
+  else if typeof exports is 'object'
+    # Node/CommonJS
+    factory(require('jquery'))
+  else
+    # Browser globals
+    factory(jQuery)
+)(hclass)

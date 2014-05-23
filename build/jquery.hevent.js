@@ -1,10 +1,12 @@
 /**
  * hevent - Css animations & transitions events for all browsers
- * @version v0.4.6
+ * @version v0.4.8
  * @link http://hiswe.github.io/hevent/
  * @license WTFPL
  */
-(function($, document, window) {
+var hclass;
+
+hclass = function($) {
   var aliases, heventMethod, orginalMethod, _results;
   aliases = {
     heventAddClass: 'addClass',
@@ -27,11 +29,22 @@
     })());
   }
   return _results;
-})(jQuery, document, window);
+};
 
-var __slice = [].slice;
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    return define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    return factory(require('jquery'));
+  } else {
+    return factory(jQuery);
+  }
+})(hclass);
 
-(function($, Modernizr, document, window) {
+var hevent,
+  __slice = [].slice;
+
+hevent = function($, Modernizr) {
   var aliasesEvent, eventName, isAnimated, lcFirst, log, sniffer, trace, triggerCustomEvent, ucFirst, _i, _len, _ref, _results;
   if (Modernizr == null) {
     return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should be installed for hevent to work') : void 0;
@@ -84,7 +97,7 @@ var __slice = [].slice;
     if (!sniffer.transAnimationSupport) {
       return false;
     }
-    style = window.getComputedStyle(el) || {};
+    style = getComputedStyle(el) || {};
     animated = false;
     _ref = sniffer.durations;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -199,4 +212,14 @@ var __slice = [].slice;
     })(eventName));
   }
   return _results;
-})(jQuery, Modernizr, document, window);
+};
+
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    return define(['jquery', 'modernizr'], factory);
+  } else if (typeof exports === 'object') {
+    return factory(require('jquery', ''), require('modernizr', ''));
+  } else {
+    return factory(jQuery, Modernizr);
+  }
+})(hevent);
