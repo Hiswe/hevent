@@ -1,12 +1,21 @@
 /**
  * hevent - Css animations & transitions events for all browsers
- * @version v0.4.8
+ * @version v0.4.9
  * @link http://hiswe.github.io/hevent/
  * @license WTFPL
  */
-var hclass;
+(function(window, factory) {
+  if (typeof define === 'function' && define.amd) {
+    return define([window, 'jquery'], factory);
+  } else if (typeof (typeof module !== "undefined" && module !== null ? module.exports : void 0) === 'object') {
+    return module.exports = factory(window, require('jquery'));
+  } else {
+    return factory(window, window.jQuery);
+  }
+})(window || this, function(window, $){
+  var hclass;
 
-hclass = function($) {
+hclass = function(window, $) {
   var aliases, heventMethod, orginalMethod, _results;
   aliases = {
     heventAddClass: 'addClass',
@@ -31,23 +40,23 @@ hclass = function($) {
   return _results;
 };
 
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    return define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    return factory(require('jquery'));
-  } else {
-    return factory(jQuery);
-  }
-})(hclass);
-
 var hevent,
   __slice = [].slice;
 
-hevent = function($, Modernizr) {
-  var aliasesEvent, eventName, isAnimated, lcFirst, log, sniffer, trace, triggerCustomEvent, ucFirst, _i, _len, _ref, _results;
+hevent = function(window, $) {
+  var Modernizr, aliasesEvent, eventName, isAnimated, lcFirst, log, sniffer, trace, triggerCustomEvent, ucFirst, _i, _len, _ref, _results;
+  Modernizr = Modernizr != null ? Modernizr : window.Modernizr;
   if (Modernizr == null) {
     return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should be installed for hevent to work') : void 0;
+  }
+  if (Modernizr.prefixed == null) {
+    return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should have the method "prefixed"') : void 0;
+  }
+  if (Modernizr.csstransitions == null) {
+    return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should have the test csstransitions') : void 0;
+  }
+  if (Modernizr.cssanimations == null) {
+    return typeof console !== "undefined" && console !== null ? console.warn('Modernizr should have the test cssanimations') : void 0;
   }
   trace = false;
   log = function() {
@@ -214,12 +223,6 @@ hevent = function($, Modernizr) {
   return _results;
 };
 
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    return define(['jquery', 'modernizr'], factory);
-  } else if (typeof exports === 'object') {
-    return factory(require('jquery', ''), require('modernizr', ''));
-  } else {
-    return factory(jQuery, Modernizr);
-  }
-})(hevent);
+  hclass(window, $);
+  hevent(window, $);
+});

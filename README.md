@@ -7,8 +7,14 @@
 - [Jquery](http://jquery.com/)
 - [Modernizr](http://modernizr.com/)
 
-see [bower.json](https://github.com/Hiswe/hevent/blob/master/bower.json) for more details
+In case of jQuery & Modernizr custom builds:
 
+Modernizr should have:
+
+- the method `prefixed` 
+- the tests `csstransitions` + `cssanimations`
+
+jQuery should be able to create [special event](http://benalman.com/news/2010/03/jquery-special-events)
 
 ## Easy transitionend/animationend
 
@@ -58,6 +64,7 @@ You can build the library by running ```gulp build``` after the necessary ```npm
 
 ## Release History
 
+- **0.4.9** – Better [UMD](https://github.com/umdjs/umd) support
 - **0.4.8** – [UMD](https://github.com/umdjs/umd) support
 - **0.4.7** – Fix Firefox issue with hevent firing even when a transitionend/animationed was active. 
 - **0.4.6**  

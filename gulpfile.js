@@ -1,6 +1,9 @@
 'use strict';
 
+var _           = require('lodash');
+var fs          = require('fs');
 var gulp        = require('gulp');
+var args        = require('yargs').argv;
 var bump        = require('gulp-bump');
 var wait        = require('gulp-wait');
 var exec        = require('gulp-exec');
@@ -15,6 +18,7 @@ var coffee      = require('gulp-coffee');
 var header      = require('gulp-header');
 var notify      = require('gulp-notify');
 var replace     = require('gulp-replace');
+var through     = require('through2');
 // SERVER
 var open        = require('gulp-open');
 var lr          = require('tiny-lr')();
@@ -37,21 +41,16 @@ var banner = ['/**',
 // VERSIONS
 /////////
 
-gulp.task('patch', function () {
+gulp.task('bump', function () {
+  if (args.minor) return gulp.src(config.pack).pipe(bump({type:'minor'})).pipe(gulp.dest('./'));
+  if (args.major) return gulp.src(config.pack).pipe(bump({type:'minor'})).pipe(gulp.dest('./'));
   return gulp.src(config.pack).pipe(bump()).pipe(gulp.dest('./'));
 });
 
-gulp.task('minor', function() {
-  return gulp.src(config.pack).pipe(bump({type:'minor'})).pipe(gulp.dest('./'));
-});
-
-gulp.task('major', function() {
-  return gulp.src(config.pack).pipe(bump({type:'major'})).pipe(gulp.dest('./'));
-});
-
 gulp.task('tag', function () {
+  console.log(args);
   var v = 'v' + pkg.version;
-  var message = 'Release ' + v;
+  var message = (args.m == null)? 'Release ' + v : 'Release ' + v  + ' – ' + args.m;
 
   console.log(gutil.colors.red('TODO'), 'for ' + pkg.version);
   console.log(gutil.colors.red("DON'T FORGET TO UPDATE README.md"));
@@ -122,12 +121,33 @@ gulp.task('stylus', ['clean-css'], function () {
 // JS
 /////////
 
+var umd = function umd(){
+  function compile(contents) {
+    return _.template( fs.readFileSync('./src/umd.jst'), {contents: contents});
+  }
+  function WrapUMD(file, enc, cb){
+    if(file.isStream()){
+      this.emit('error', new PluginError('gulp-wrap-umd', 'Streaming not supported'));
+      return cb();
+    }
+    if(file.isBuffer()){
+      file.contents = new Buffer(compile(String(file.contents)));
+    }
+    this.push(file);
+    cb();
+  }
+
+  return through.obj(WrapUMD);
+};
+
+
 gulp.task('build', ['clean-js'], function(){
   return gulp.src(config.plugin.src)
     .pipe(gulpif(/[.]coffee$/, replace(/\d+\.\d+\.\d+/, pkg.version)))
     .pipe(gulp.dest(config.plugin.srcFolder))
     .pipe(gulpif(/[.]coffee$/, coffee({join: true, bare: true})))
     .pipe(concat('jquery.hevent.js'))
+    .pipe(umd())
     .pipe(header(banner, { pkg : pkg } ))
     .pipe(gulp.dest(config.plugin.dst))
     .pipe(replace(/(trace\s=\s)(true)/, '$1false'))
@@ -182,11 +202,11 @@ gulp.task("start", ['server'], function(){
 /////////
 
 gulp.task('default', function() {
-  console.log(gutil.colors.red('patch'), '  ', 'patch version of json');
-  console.log(gutil.colors.red('minor'), '  ', 'minor version of json');
-  console.log(gutil.colors.red('major'), '  ', 'major version of json');
-  console.log(gutil.colors.red('tag'), '    ', 'taaag');
-  console.log(gutil.colors.red('assets'), ' ', 'Copy fonts & libs');
-  console.log(gutil.colors.red('build'), '  ', 'Build plugin');
-  console.log(gutil.colors.red('start'), '  ', 'Demo tiny server with lr');
+  console.log(gutil.colors.red('bump'), '       ', 'patch version of json');
+  console.log(gutil.colors.red('  --minor'), '  ', 'minor version of json');
+  console.log(gutil.colors.red('  --major'), '  ', 'major version of json');
+  console.log(gutil.colors.red('tag'), '        ', 'taaag');
+  console.log(gutil.colors.red('assets'), '     ', 'Copy fonts & libs');
+  console.log(gutil.colors.red('build'), '      ', 'Build plugin');
+  console.log(gutil.colors.red('start'), '      ', 'Demo tiny server with lr');
 });

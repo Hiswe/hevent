@@ -1,15 +1,21 @@
 #
 # Name          : htransanimation
 # Author        : Hiswe halya, https://github.com/hiswe
-# Version       : 0.4.8
+# Version       : 0.4.9
 # Repo          : git://github.com/Hiswe/hevent
 # Website       : https://github.com/Hiswe/hevent
 # Dependencies  : Modernizr, jQuery, jquery.hclass.coffee
 #
 
-hevent = ($, Modernizr) ->
+hevent = (window, $) ->
 
+  # Modernizr is not yet a commonJS module
+  # Use global to import
+  Modernizr = if Modernizr? then Modernizr else window.Modernizr
   return console?.warn('Modernizr should be installed for hevent to work') unless Modernizr?
+  return console?.warn('Modernizr should have the method "prefixed"') unless Modernizr.prefixed?
+  return console?.warn('Modernizr should have the test csstransitions') unless Modernizr.csstransitions?
+  return console?.warn('Modernizr should have the test cssanimations') unless Modernizr.cssanimations?
 
   trace = false
 
@@ -185,18 +191,3 @@ hevent = ($, Modernizr) ->
 
   for eventName in ['transitionend', 'animationend']
     do (eventName) -> aliasesEvent(eventName )
-
-
-# UMD
-# https://github.com/umdjs/umd/blob/master/jqueryPluginCommonjs.js
-((factory) ->
-  if typeof define is 'function' and define.amd
-    # AMD. Register as an anonymous module.
-    define(['jquery', 'modernizr'], factory)
-  else if typeof exports is 'object'
-    # Node/CommonJS
-    factory(require('jquery', ''), require('modernizr', ''))
-  else
-    # Browser globals
-    factory(jQuery, Modernizr)
-)(hevent)
